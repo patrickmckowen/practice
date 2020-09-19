@@ -9,7 +9,9 @@ import SwiftUI
 
 struct TimePicker: View {
     @EnvironmentObject var appTimer: AppTimer
-    @Binding var timePickerIndex: Int
+    @State private var timePickerIndex = 0
+    
+    @Binding var showTimePicker: Bool
     
     var body: some View {
         VStack {
@@ -21,13 +23,15 @@ struct TimePicker: View {
             }
             .background(Color.white)
             .cornerRadius(8)
-            .padding(.horizontal, 16)
+            .frame(width: UIScreen.main.bounds.width - 32)
             
-            Button("Set Timer") {
-                appTimer.setTimerLength( timePickerIndex)
+            Button("Done") {
+                appTimer.setTimerLength(timePickerIndex)
+                appTimer.timePickerIndex = self.timePickerIndex
+                showTimePicker = false
             }
             .buttonStyle(ButtonPrimary())
-            .padding(.bottom, 32)
+            .padding(.bottom, 16)
         }
     }
 }
@@ -35,7 +39,7 @@ struct TimePicker: View {
 struct TimePicker_Previews: PreviewProvider {
     static var previews: some View {
         let appTimer = AppTimer()
-        TimePicker(timePickerIndex: .constant(0))
+        TimePicker(showTimePicker: .constant(true))
             .environmentObject(appTimer)
     }
 }

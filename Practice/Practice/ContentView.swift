@@ -30,12 +30,8 @@ struct ContentView: View {
                     Countdown()
                     Button("Save Session") {
                         yogi.saveSession(date: Date(), duration: appTimer.timePassed)
+                        appTimer.reset()
                     }
-                }
-                
-                // Time Picker
-                if showTimePicker {
-                    TimePicker(timePickerIndex: $timePickerIndex)
                 }
                 
                 // Session Complete

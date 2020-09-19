@@ -15,9 +15,7 @@ struct Streak: View {
         VStack(spacing: 12) {
             Text("Current Streak: \(yogi.currentStreak)")
             Text("Longest Streak: \(yogi.longestStreak)")
-            NavigationLink(destination: Stats()) {
-                Text("See All Stats")
-            }
+            Spacer()
         }
         .padding(.vertical, 16)
         .padding(.horizontal, 32)
