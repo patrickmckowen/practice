@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		873758FB251A6C890008CFC3 /* Playground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 873758FA251A6C890008CFC3 /* Playground.swift */; };
 		877B319B25151B1200698D88 /* PracticeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877B319A25151B1200698D88 /* PracticeApp.swift */; };
 		877B319D25151B1200698D88 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877B319C25151B1200698D88 /* ContentView.swift */; };
 		877B319F25151B1300698D88 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 877B319E25151B1300698D88 /* Assets.xcassets */; };
@@ -25,6 +26,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		873758FA251A6C890008CFC3 /* Playground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Playground.swift; sourceTree = "<group>"; };
 		877B319725151B1200698D88 /* Practice.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Practice.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		877B319A25151B1200698D88 /* PracticeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeApp.swift; sourceTree = "<group>"; };
 		877B319C25151B1200698D88 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -88,6 +90,7 @@
 				877B31C225151D0800698D88 /* TimePicker.swift */,
 				877B31C525151D1900698D88 /* TimerControls.swift */,
 				877B31C825151D2700698D88 /* Yogi.swift */,
+				873758FA251A6C890008CFC3 /* Playground.swift */,
 				877B319E25151B1300698D88 /* Assets.xcassets */,
 				877B31A325151B1300698D88 /* Info.plist */,
 				877B31A025151B1300698D88 /* Preview Content */,
@@ -183,6 +186,7 @@
 				877B31C025151CFA00698D88 /* Styles.swift in Sources */,
 				877B31B125151C5700698D88 /* DateExtension.swift in Sources */,
 				877B319B25151B1200698D88 /* PracticeApp.swift in Sources */,
+				873758FB251A6C890008CFC3 /* Playground.swift in Sources */,
 				877B31C925151D2700698D88 /* Yogi.swift in Sources */,
 				877B31AB25151BF000698D88 /* AppTimer.swift in Sources */,
 				877B31AE25151C1900698D88 /* TimerRunning.swift in Sources */,

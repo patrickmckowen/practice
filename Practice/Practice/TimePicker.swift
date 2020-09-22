@@ -27,11 +27,17 @@ struct TimePicker: View {
             Button("Done") {
                 appTimer.setTimerLength(timePickerIndex)
                 appTimer.timePickerIndex = self.timePickerIndex
+                
+                let defaults = UserDefaults.standard
+                defaults.set(self.timePickerIndex, forKey: "TimePickerIndex")
+                
                 showTimePicker = false
+                
             }
-            .buttonStyle(ButtonPrimary())
-            .padding(.bottom, 16)
+            .buttonStyle(ButtonLight())
+            .padding(.bottom, 32)
         }
+        .transition(.move(edge: .bottom))
     }
 }
 

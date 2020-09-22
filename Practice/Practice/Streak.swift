@@ -71,6 +71,7 @@ struct Streak: View {
             .padding(.vertical, 16)
             .padding(.horizontal, 32)
         }
+        .offset(y: appTimer.state == .off ? 0 : -10)
         .opacity(appTimer.state == .off ? 1.0 : 0.0)
     }
 }

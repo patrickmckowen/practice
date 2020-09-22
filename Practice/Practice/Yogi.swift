@@ -78,6 +78,8 @@ class Yogi: ObservableObject {
                             .integer(forKey: "CurrentStreak")
                     } else {
                         currentStreak = 0
+                        let defaults = UserDefaults.standard
+                        defaults.set(currentStreak, forKey: "CurrentStreak")
                     }
                 }
                 
@@ -92,6 +94,7 @@ class Yogi: ObservableObject {
         UserDefaults.standard.removeObject(forKey: "Sessions")
         UserDefaults.standard.removeObject(forKey: "CurrentStreak")
         UserDefaults.standard.removeObject(forKey: "LongestStreak")
+        UserDefaults.standard.removeObject(forKey: "TimePickerIndex")
         UserDefaults.standard.removeObject(forKey: "TimerStart")
         UserDefaults.standard.synchronize()
     }

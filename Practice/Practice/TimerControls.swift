@@ -14,7 +14,6 @@ struct TimerControls: View {
     @Binding var showTimePicker: Bool
     
     @Namespace var playAnimation
-    @State var playTapped = false
     
     var duration: Int {
         let options = appTimer.lengthOptions
@@ -24,6 +23,7 @@ struct TimerControls: View {
     
     var body: some View {
         ZStack {
+            // Gradient
             VStack {
                 Spacer()
                 LinearGradient(gradient: Gradient(colors: [Color.black, Color.black.opacity(0.0)]), startPoint: .bottom, endPoint: .top)
@@ -32,11 +32,16 @@ struct TimerControls: View {
             }
             .opacity(appTimer.state == .off ? 1.0 : 0.0)
             
+            // Timer Off
             VStack {
                 Spacer()
                 HStack(spacing: 20) {
                     // Duration
-                    Button(action: { showTimePicker = true }) {
+                    Button(action: {
+                        withAnimation(.spring(response: 0.35)) {
+                            showTimePicker = true
+                        }
+                    }) {
                         Image(systemName: "timer")
                         Text("\(duration)m")
                             .fontWeight(.semibold)
@@ -70,8 +75,6 @@ struct TimerControls: View {
                                 withAnimation(.spring()) {
                                     appTimer.start()
                                 }
-                            } else if appTimer.state == .running {
-                                appTimer.pause()
                             }
                         })
                     }
@@ -94,11 +97,15 @@ struct TimerControls: View {
                 .padding(.bottom, 32)
                 .opacity(showTimePicker ? 0.0 : 1.0)
                 // end HStack
-                
-                if showTimePicker { TimePicker(showTimePicker: $showTimePicker) }
             }
             .opacity(appTimer.state == .off ? 1.0 : 0.0)
             
+            // Time Picker
+            if showTimePicker {
+                TimePicker(showTimePicker: $showTimePicker)
+            }
+            
+            // Timer Running / Paused
             if appTimer.state != .off {
                 ZStack {
                     // Play Button
@@ -118,7 +125,10 @@ struct TimerControls: View {
                     }
                     .matchedGeometryEffect(id: "PlayButton", in: playAnimation)
                     .onTapGesture(perform: {
-                        appTimer.state == .running ? appTimer.pause() : appTimer.start()
+                        withAnimation(.spring(response: 0.35)) {
+                            appTimer.state == .running ? appTimer.pause() : appTimer.start()
+                        }
+                        
                     }) // End Play Button
                     
                     // Countdown
@@ -127,27 +137,37 @@ struct TimerControls: View {
                             .font(Font.system(size: 32, weight: .regular, design: .serif).monospacedDigit())
                             .foregroundColor(.white)
                             .frame(height: UIScreen.main.bounds.height / 2 - 62)
-                          //  .padding(.top, 124)
+                        //  .padding(.top, 124)
                         Spacer()
                     } // End Countdown Text
                     
+                    // Buttons visible when paused
                     if appTimer.state == .paused {
                         VStack(spacing: 8) {
                             Spacer()
                             if appTimer.timePassed >= 5 {
                                 Button("Log \(appTimer.formatTime(appTimer.timePassed)) sesion") {
-                                    yogi.saveSession(date: Date(), duration: appTimer.timePassed)
+                                    withAnimation(.spring()) {
+                                        yogi.saveSession(date: Date(), duration: appTimer.timePassed)
+                                        appTimer.reset()
+                                    }
                                 }
+                                .buttonStyle(ButtonLight())
+                                
+                                
+                                .background(Color.white)
+                                .cornerRadius(8)
                             }
                             Button("Cancel") {
-                                appTimer.reset()
+                                withAnimation(.spring()) {
+                                    appTimer.reset()
+                                }
                             }
+                            .buttonStyle(ButtonLight())
                         }
+                        .padding(.bottom, 32)
                         .transition(.move(edge: .bottom))
                     }
-                    
-                    
-                    
                 } // End ZStack container
                 
             } // End outer conditional

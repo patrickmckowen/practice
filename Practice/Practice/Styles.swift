@@ -7,30 +7,15 @@
 
 import SwiftUI
 
-struct ButtonPrimary: ButtonStyle {
+struct ButtonLight: ButtonStyle {
     public func makeBody(configuration: Self.Configuration) -> some View {
         configuration.label
-            .foregroundColor(.blue)
+            .foregroundColor(.black)
             .frame(width: UIScreen.main.bounds.width - 32, height: 56)
-            
             .background(Color.white)
-            
-            
             .cornerRadius(8)
-        
-            // .shadow(color: Color(#colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.1)), radius:2, x:0, y:0)
-            // .shadow(color: Color(#colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.15)), radius:8, x:0, y:2)
-    }
-}
-
-struct IconButton: ButtonStyle {
-    public func makeBody(configuration: Self.Configuration) -> some View {
-        configuration.label
-            .font(.title2)
-            .foregroundColor(.blue)
-            .padding(20)
-            .background(Color(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)))
-            .cornerRadius(100)
+             .shadow(color: Color(#colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.1)), radius:2, x:0, y:0)
+             .shadow(color: Color(#colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.15)), radius:8, x:0, y:2)
     }
 }
 
