@@ -10,7 +10,6 @@ import SwiftUI
 struct TimePicker: View {
     @EnvironmentObject var appTimer: AppTimer
     @State private var timePickerIndex = 0
-    
     @Binding var showTimePicker: Bool
     
     var body: some View {

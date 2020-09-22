@@ -12,7 +12,7 @@
 		877B319F25151B1300698D88 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 877B319E25151B1300698D88 /* Assets.xcassets */; };
 		877B31A225151B1300698D88 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 877B31A125151B1300698D88 /* Preview Assets.xcassets */; };
 		877B31AB25151BF000698D88 /* AppTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877B31AA25151BF000698D88 /* AppTimer.swift */; };
-		877B31AE25151C1900698D88 /* Countdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877B31AD25151C1900698D88 /* Countdown.swift */; };
+		877B31AE25151C1900698D88 /* TimerRunning.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877B31AD25151C1900698D88 /* TimerRunning.swift */; };
 		877B31B125151C5700698D88 /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877B31B025151C5700698D88 /* DateExtension.swift */; };
 		877B31B425151C7700698D88 /* SessionComplete.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877B31B325151C7700698D88 /* SessionComplete.swift */; };
 		877B31B725151C9400698D88 /* SessionList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877B31B625151C9400698D88 /* SessionList.swift */; };
@@ -32,7 +32,7 @@
 		877B31A125151B1300698D88 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		877B31A325151B1300698D88 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		877B31AA25151BF000698D88 /* AppTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTimer.swift; sourceTree = "<group>"; };
-		877B31AD25151C1900698D88 /* Countdown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Countdown.swift; sourceTree = "<group>"; };
+		877B31AD25151C1900698D88 /* TimerRunning.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerRunning.swift; sourceTree = "<group>"; };
 		877B31B025151C5700698D88 /* DateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
 		877B31B325151C7700698D88 /* SessionComplete.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionComplete.swift; sourceTree = "<group>"; };
 		877B31B625151C9400698D88 /* SessionList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionList.swift; sourceTree = "<group>"; };
@@ -74,10 +74,11 @@
 		877B319925151B1200698D88 /* Practice */ = {
 			isa = PBXGroup;
 			children = (
+				87AA8A4D251948A500A47B52 /* Fonts */,
 				877B319A25151B1200698D88 /* PracticeApp.swift */,
 				877B31AA25151BF000698D88 /* AppTimer.swift */,
 				877B319C25151B1200698D88 /* ContentView.swift */,
-				877B31AD25151C1900698D88 /* Countdown.swift */,
+				877B31AD25151C1900698D88 /* TimerRunning.swift */,
 				877B31B025151C5700698D88 /* DateExtension.swift */,
 				877B31B325151C7700698D88 /* SessionComplete.swift */,
 				877B31B625151C9400698D88 /* SessionList.swift */,
@@ -100,6 +101,13 @@
 				877B31A125151B1300698D88 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		87AA8A4D251948A500A47B52 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -177,7 +185,7 @@
 				877B319B25151B1200698D88 /* PracticeApp.swift in Sources */,
 				877B31C925151D2700698D88 /* Yogi.swift in Sources */,
 				877B31AB25151BF000698D88 /* AppTimer.swift in Sources */,
-				877B31AE25151C1900698D88 /* Countdown.swift in Sources */,
+				877B31AE25151C1900698D88 /* TimerRunning.swift in Sources */,
 				877B31BA25151CB900698D88 /* Stats.swift in Sources */,
 				877B31B725151C9400698D88 /* SessionList.swift in Sources */,
 				877B31BD25151CE500698D88 /* Streak.swift in Sources */,

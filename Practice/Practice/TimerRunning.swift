@@ -1,5 +1,5 @@
 //
-//  Countdown.swift
+//  TimerRunning.swift
 //  Practice
 //
 //  Created by Patrick McKowen on 9/17/20.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct Countdown: View {
+struct TimerRunning: View {
     @EnvironmentObject var yogi: Yogi
     @EnvironmentObject var appTimer: AppTimer
     
@@ -17,11 +17,11 @@ struct Countdown: View {
     }
 }
 
-struct Countdown_Previews: PreviewProvider {
+struct TimerRunning_Previews: PreviewProvider {
     static var previews: some View {
         let appTimer = AppTimer()
         let yogi = Yogi()
-        return Countdown()
+        return TimerRunning()
             .environmentObject(appTimer)
             .environmentObject(yogi)
     }

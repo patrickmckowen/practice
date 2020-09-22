@@ -23,3 +23,24 @@ struct ButtonPrimary: ButtonStyle {
     }
 }
 
+struct IconButton: ButtonStyle {
+    public func makeBody(configuration: Self.Configuration) -> some View {
+        configuration.label
+            .font(.title2)
+            .foregroundColor(.blue)
+            .padding(20)
+            .background(Color(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)))
+            .cornerRadius(100)
+    }
+}
+
+struct Blur: UIViewRepresentable {
+    var style: UIBlurEffect.Style = .systemMaterial
+    func makeUIView(context: Context) -> UIVisualEffectView {
+        return UIVisualEffectView(effect: UIBlurEffect(style: style))
+    }
+    func updateUIView(_ uiView: UIVisualEffectView, context: Context) {
+        uiView.effect = UIBlurEffect(style: style)
+    }
+}
+
