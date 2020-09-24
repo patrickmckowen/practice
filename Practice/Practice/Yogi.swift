@@ -30,8 +30,13 @@ class Yogi: ObservableObject {
     @Published var lastSessionDate: Date?
     @Published var currentStreak: Int = UserDefaults.standard
         .integer(forKey: "CurrentStreak")
-    @Published var longestStreak: Int = UserDefaults.standard
-        .integer(forKey: "LongestStreak")
+    @Published var longestStreak: Int = 26
+        //UserDefaults.standard.integer(forKey: "LongestStreak")
+    
+    @Published var hitMilestone7: Bool = false
+    @Published var milestone7Active: Bool = false
+    @Published var hitMilestone14: Bool = false
+    @Published var hitMilestone30: Bool = false
     
     func saveSession(date: Date, duration: TimeInterval) {
         let newSession = Session(date: date, duration: duration)
@@ -64,6 +69,13 @@ class Yogi: ObservableObject {
         defaults.set(longestStreak, forKey: "LongestStreak")
     }
     
+    func updateMilestones() {
+        let streak = longestStreak
+        if streak >= 7 { hitMilestone7 = true }
+        if streak >= 14 { hitMilestone14 = true }
+        if streak >= 30 { hitMilestone30 = true }
+    }
+    
     init(){
         if let savedSessions = UserDefaults.standard.object(forKey: "Sessions") as? Data {
             let decoder = JSONDecoder()
@@ -84,9 +96,9 @@ class Yogi: ObservableObject {
                 }
                 
             } else {
-                print("Error decoding")}
+                print("Error decoding Sessions")}
         } else {
-            print("UserDefaults is empty")
+            print("Saved Sessions is empty")
         }
     }
     

@@ -71,9 +71,7 @@ struct TimerControls: View {
                                 .frame(width: 80, height: 80)
                                 .foregroundColor(.white)
                                 .shadow(color: Color/*@START_MENU_TOKEN@*/.black/*@END_MENU_TOKEN@*/.opacity(0.08), radius: 8, x: /*@START_MENU_TOKEN@*/0.0/*@END_MENU_TOKEN@*/, y: 4.0)
-                            Image(systemName:
-                                    appTimer.state != .running
-                                    ? "play.fill" : "pause.fill")
+                            Image(systemName: "play.fill")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .frame(maxWidth: 32, maxHeight: 32)
@@ -85,6 +83,7 @@ struct TimerControls: View {
                         .onTapGesture(perform: {
                             if appTimer.state == .off {
                                 withAnimation(.spring()) {
+                                    hapticSuccess()
                                     appTimer.start()
                                 }
                             }
@@ -196,6 +195,11 @@ struct TimerControls: View {
                 
             } // End outer conditional
         }
+    }
+    
+    func hapticSuccess() {
+        let generator = UINotificationFeedbackGenerator()
+        generator.notificationOccurred(.success)
     }
 }
 

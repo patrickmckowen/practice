@@ -29,6 +29,7 @@ struct ContentView: View {
                 Blur(style: .systemUltraThinMaterialLight)
                     .edgesIgnoringSafeArea(.all)
                     .opacity(appTimer.state == .off ? 0.0 : 1.0)
+                 
                 
                 VStack() {
                     if showStreak { Streak() }
@@ -42,7 +43,8 @@ struct ContentView: View {
                 TimerControls(showTimePicker: $showTimePicker)
             }
             .navigationBarHidden(true)
-            .background(Image("default").edgesIgnoringSafeArea(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/))
+            .background(Image("default")
+                            .edgesIgnoringSafeArea(.all))
         }
     }
 }

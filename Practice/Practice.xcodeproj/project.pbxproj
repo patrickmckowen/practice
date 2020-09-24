@@ -23,6 +23,7 @@
 		877B31C325151D0800698D88 /* TimePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877B31C225151D0800698D88 /* TimePicker.swift */; };
 		877B31C625151D1900698D88 /* TimerControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877B31C525151D1900698D88 /* TimerControls.swift */; };
 		877B31C925151D2700698D88 /* Yogi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877B31C825151D2700698D88 /* Yogi.swift */; };
+		87C56578251BF1E500B35BB7 /* Milestones.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87C56577251BF1E500B35BB7 /* Milestones.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +45,7 @@
 		877B31C225151D0800698D88 /* TimePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimePicker.swift; sourceTree = "<group>"; };
 		877B31C525151D1900698D88 /* TimerControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerControls.swift; sourceTree = "<group>"; };
 		877B31C825151D2700698D88 /* Yogi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Yogi.swift; sourceTree = "<group>"; };
+		87C56577251BF1E500B35BB7 /* Milestones.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Milestones.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,6 +84,7 @@
 				877B319C25151B1200698D88 /* ContentView.swift */,
 				877B31AD25151C1900698D88 /* TimerRunning.swift */,
 				877B31B025151C5700698D88 /* DateExtension.swift */,
+				87C56577251BF1E500B35BB7 /* Milestones.swift */,
 				877B31B325151C7700698D88 /* SessionComplete.swift */,
 				877B31B625151C9400698D88 /* SessionList.swift */,
 				877B31B925151CB900698D88 /* Stats.swift */,
@@ -189,6 +192,7 @@
 				873758FB251A6C890008CFC3 /* Playground.swift in Sources */,
 				877B31C925151D2700698D88 /* Yogi.swift in Sources */,
 				877B31AB25151BF000698D88 /* AppTimer.swift in Sources */,
+				87C56578251BF1E500B35BB7 /* Milestones.swift in Sources */,
 				877B31AE25151C1900698D88 /* TimerRunning.swift in Sources */,
 				877B31BA25151CB900698D88 /* Stats.swift in Sources */,
 				877B31B725151C9400698D88 /* SessionList.swift in Sources */,

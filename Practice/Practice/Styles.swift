@@ -29,3 +29,24 @@ struct Blur: UIViewRepresentable {
     }
 }
 
+// Foreground Mask
+extension View {
+    public func foregroundMask<Overlay: View>(_ overlay: Overlay) -> some View {
+        _CustomForeground(overlay: overlay, for: self)
+    }
+}
+
+private struct _CustomForeground<Content: View, Overlay: View>: View {
+    let content: Content
+    let overlay: Overlay
+    
+    internal init(overlay: Overlay, for content: Content) {
+        self.content = content
+        self.overlay = overlay
+    }
+    
+    var body: some View {
+        content.overlay(overlay).mask(content)
+    }
+}
+
