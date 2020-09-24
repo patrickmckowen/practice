@@ -15,7 +15,7 @@ struct MilestoneBadge: View {
         case large
     }
     
-    var size: Size
+    var isSmall: Bool
     
     var goal: Int
     var prevGoal: Int
@@ -48,39 +48,47 @@ struct MilestoneBadge: View {
             if !hasAchieved && !isLocked {
                 // Stroke Background
                 Circle()
-                    .stroke(lineWidth: 5.0)
+                    .stroke(lineWidth: isSmall ? 2 : 5.0)
                     .foregroundColor(Color.black.opacity(0.2))
-                    .frame(width: 140)
+                    .frame(width: isSmall ? 103 : 140)
                 
                 // Stroke Fill
                 Circle()
                     .trim(from: 0.0, to: CGFloat(min(progress, 1.0)))
-                    .stroke(gradient, style: StrokeStyle(lineWidth: 5.0, lineCap: .round, lineJoin: .round))
-                    .frame(width: 140)
+                    .stroke(gradient, style: StrokeStyle(lineWidth: isSmall ? 2 : 5.0, lineCap: .round, lineJoin: .round))
+                    .frame(width: isSmall ? 103 : 140)
                     .rotationEffect(Angle(degrees: 270.0))
                     .animation(.linear)
             }
             //  Circle Fill
-            Circle()
-                .fill(gradient)
-                .frame(width: hasAchieved || isLocked ? 144 : 124, height: hasAchieved || isLocked ? 144 : 124)
-                .opacity(isLocked ? 0.3 : 1.0)
+            if isSmall {
+                Circle()
+                    .fill(gradient)
+                    .frame(width: hasAchieved || isLocked ? 96 : 96, height: hasAchieved || isLocked ? 96 : 96)
+                    .opacity(isLocked ? 0.3 : 1.0)
+            } else {
+                Circle()
+                    .fill(gradient)
+                    .frame(width: hasAchieved || isLocked ? 144 : 124, height: hasAchieved || isLocked ? 144 : 124)
+                    .opacity(isLocked ? 0.3 : 1.0)
+            }
             
             if isLocked {
                 Image(systemName: "lock.fill")
                     .font(.title)
                     .foregroundColor(Color(#colorLiteral(red: 0.5019607843, green: 0.5019607843, blue: 0.5019607843, alpha: 1)))
                     .shadow(color: Color.black.opacity(0.2), radius: 4, x: /*@START_MENU_TOKEN@*/0.0/*@END_MENU_TOKEN@*/, y: 2.0)
-            }
-            
-            if !isLocked {
+            } else {
                 VStack(spacing: 0) {
                     Image("lotus")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(height: isSmall ? 16 : 20)
                     Text("\(goal)")
-                        .font(.system(size: 56, weight: .semibold, design: .serif))
+                        .font(.system(size: isSmall ? 40 : 56, weight: .semibold, design: .serif))
                         .foregroundColor(.white)
                         .shadow(color: Color.black.opacity(0.2), radius: 4, x: /*@START_MENU_TOKEN@*/0.0/*@END_MENU_TOKEN@*/, y: 2.0)
-                        .padding(.top, -8)
+                        .padding(.top, isSmall ? -6 : -8)
                 }
             }
         }
@@ -90,7 +98,7 @@ struct MilestoneBadge: View {
 struct Milestone_Previews: PreviewProvider {
     static var previews: some View {
         let yogi = Yogi()
-        return MilestoneBadge(size: .large, goal: 90, prevGoal: 60, currentStreak: yogi.currentStreak, longestStreak: yogi.longestStreak)
+        return MilestoneBadge(isSmall: true, goal: 30, prevGoal: 14, currentStreak: yogi.currentStreak, longestStreak: yogi.longestStreak)
             .environmentObject(yogi)
     }
 }
