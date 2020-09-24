@@ -11,12 +11,22 @@ struct SessionComplete: View {
     @EnvironmentObject var yogi: Yogi
     @EnvironmentObject var appTimer: AppTimer
     
-    var nextMilestone = 30
-    var prevMilestone = 14
-    
     var daysToNextMilestone: Int {
-        return nextMilestone - yogi.currentStreak
+        return yogi.nextMilestone - yogi.currentStreak
     }
+    
+    var milestoneReached: Bool {
+        if yogi.currentStreak == yogi.nextMilestone {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    let gradient = LinearGradient(gradient:Gradient(colors: [Color(#colorLiteral(red: 1, green: 0.6078431373, blue: 0.4509803922, alpha: 1)), Color(#colorLiteral(red: 0.4901960784, green: 0.4196078431, blue: 0.8980392157, alpha: 1))]), startPoint: .topLeading, endPoint: .bottomTrailing)
+    
+    @State var expand = false
+    @State var fade = false
     
     var body: some View {
         // Main Container
@@ -28,7 +38,7 @@ struct SessionComplete: View {
                     .padding(.top, 24)
                     .padding(.bottom, 4)
                 
-                Text("Session time: \(appTimer.formatTime(appTimer.timeRemaining))")
+                Text("Session time: \(appTimer.formatTime(appTimer.timePassed))")
                     .font(.subheadline)
                     .foregroundColor(.gray)
                     .padding(.bottom, 16)
@@ -38,14 +48,47 @@ struct SessionComplete: View {
                     .frame(maxWidth: .infinity, maxHeight: 0.5)
                     .padding(.bottom, 24)
                 
-                MilestoneBadge(isSmall: false, goal: nextMilestone, prevGoal: prevMilestone, currentStreak: yogi.currentStreak, longestStreak: yogi.longestStreak)
-                    .frame(maxHeight: 144)
-                    .padding(.bottom, 8)
-                
-                Text("Next milestone in \(daysToNextMilestone) days")
-                    .font(.subheadline)
-                    .foregroundColor(.gray)
-                    .padding(.bottom, 24)
+                if yogi.hitMilestone {
+                        ZStack {
+                            Circle()
+                                .fill(gradient)
+                                .opacity(0.45)
+                                .frame(width: 200, height: 200)
+                                .scaleEffect(expand ? 1 : 0)
+                                .opacity(fade ? 0 : 1)
+
+                            MilestoneBadge(isSmall: false, goal: yogi.currentMilestone, prevGoal: 0, currentStreak: yogi.currentStreak, longestStreak: yogi.longestStreak)
+                                .frame(maxHeight: 144)
+                            Text("You've reached a new milestone!")
+                                .font(.subheadline)
+                                .foregroundColor(.gray)
+                                .offset(y: 92)
+                        }
+                        .onAppear(perform: {
+                            guard yogi.hitMilestone == true else { return }
+                            withAnimation(Animation.easeInOut(duration: 4).repeatForever(autoreverses: false)) {
+                                expand.toggle()
+                                
+                            }
+                            
+                            withAnimation(Animation.linear(duration: 2).delay(2).repeatForever(autoreverses: false)) {
+                                fade.toggle()
+                            }
+                            
+                        })
+                        .padding(.top, -32)
+                        .padding(.bottom, 24)
+                    
+                }
+                if !yogi.hitMilestone {
+                    MilestoneBadge(isSmall: false, goal: yogi.nextMilestone, prevGoal: 0, currentStreak: yogi.currentStreak, longestStreak: yogi.longestStreak)
+                        .frame(maxHeight: 144)
+                        .padding(.bottom, 8)
+                    Text("Next milestone in \(daysToNextMilestone) days")
+                        .font(.subheadline)
+                        .foregroundColor(.gray)
+                        .padding(.bottom, 24)
+                }
                 
                 Rectangle()
                     .fill(Color.black.opacity(0.15))
@@ -91,8 +134,8 @@ struct SessionComplete: View {
             }
             .buttonStyle(ButtonLight())
         }
-        .opacity(appTimer.state == .completed ? 1.0 : 0.0)
-        .scaleEffect(appTimer.state == .completed ? 1 : 0, anchor: .bottom)
+     //   .opacity(appTimer.state == .completed ? 1.0 : 0.0)
+     //   .scaleEffect(appTimer.state == .completed ? 1 : 0, anchor: .bottom)
 
     }
 }

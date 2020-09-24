@@ -28,15 +28,12 @@ class Yogi: ObservableObject {
     @Published var totalSessions: Int = 0
     @Published var totalDuration: TimeInterval = 0
     @Published var lastSessionDate: Date?
-    @Published var currentStreak: Int = UserDefaults.standard
-        .integer(forKey: "CurrentStreak")
-    @Published var longestStreak: Int = 26
-        //UserDefaults.standard.integer(forKey: "LongestStreak")
+    @Published var currentStreak: Int = UserDefaults.standard.integer(forKey: "CurrentStreak")
+    @Published var longestStreak: Int = UserDefaults.standard.integer(forKey: "LongestStreak")
     
-    @Published var hitMilestone7: Bool = false
-    @Published var milestone7Active: Bool = false
-    @Published var hitMilestone14: Bool = false
-    @Published var hitMilestone30: Bool = false
+    @Published var hitMilestone: Bool = false
+    @Published var nextMilestone: Int = 7
+    @Published var currentMilestone: Int = 7
     
     func saveSession(date: Date, duration: TimeInterval) {
         let newSession = Session(date: date, duration: duration)
@@ -45,6 +42,13 @@ class Yogi: ObservableObject {
         totalSessions += 1
         totalDuration += duration
         
+        if currentStreak == 0 { currentStreak = 1}
+        if longestStreak == 0 { longestStreak = 1 }
+        
+        updateStreak()
+        lastSessionDate = date
+        
+        /*
         if currentStreak == 0 { currentStreak = 1}
         if longestStreak == 0 { longestStreak = 1 }
         
@@ -61,19 +65,97 @@ class Yogi: ObservableObject {
         if currentStreak >= longestStreak {
             longestStreak = currentStreak
         }
+ */
         
-        lastSessionDate = date
+        
+        /*
+        let defaults = UserDefaults.standard
+        defaults.set(currentStreak, forKey: "CurrentStreak")
+        defaults.set(longestStreak, forKey: "LongestStreak")
+ */
+    }
+    
+    func updateStreak() {
+        if let lastSession = lastSessionDate {
+            if lastSession.isYesterday {
+                currentStreak += 1
+            } else if lastSession.isToday {
+                return
+            } else {
+                currentStreak = 1
+            }
+        }
+
+        if currentStreak >= longestStreak {
+            longestStreak = currentStreak
+        }
+        
+        switch longestStreak {
+        case 0..<7:
+            nextMilestone = 7
+            hitMilestone = false
+        case 7:
+            currentMilestone = 7
+            nextMilestone = 14
+            hitMilestone = true
+        case 8..<14:
+            nextMilestone = 14
+            hitMilestone = false
+        case 14:
+            currentMilestone = 14
+            nextMilestone = 30
+            hitMilestone = true
+        case 15..<30:
+            nextMilestone = 30
+            hitMilestone = false
+        case 30:
+            currentMilestone = 30
+            nextMilestone = 60
+            hitMilestone = true
+        case 31..<60:
+            nextMilestone = 60
+            hitMilestone = false
+        case 60:
+            currentMilestone = 60
+            nextMilestone = 90
+            hitMilestone = true
+        case 61..<90:
+            nextMilestone = 90
+            hitMilestone = false
+        case 90:
+            currentMilestone = 90
+            nextMilestone = 180
+            hitMilestone = true
+        case 91..<180:
+            nextMilestone = 180
+            hitMilestone = false
+        case 180:
+            currentMilestone = 180
+            nextMilestone = 270
+            hitMilestone = true
+        case 181..<270:
+            nextMilestone = 270
+            hitMilestone = false
+        case 270:
+            currentMilestone = 270
+            nextMilestone = 365
+            hitMilestone = true
+        case 271..<365:
+            nextMilestone = 365
+            hitMilestone = false
+        case 365:
+            currentMilestone = 365
+            nextMilestone = 1000
+            hitMilestone = true
+        default:
+            nextMilestone = 1000
+            hitMilestone = false
+        }
         
         let defaults = UserDefaults.standard
         defaults.set(currentStreak, forKey: "CurrentStreak")
         defaults.set(longestStreak, forKey: "LongestStreak")
-    }
-    
-    func updateMilestones() {
-        let streak = longestStreak
-        if streak >= 7 { hitMilestone7 = true }
-        if streak >= 14 { hitMilestone14 = true }
-        if streak >= 30 { hitMilestone30 = true }
+        defaults.set(nextMilestone, forKey: "NextMilestone")
     }
     
     init(){
@@ -100,6 +182,22 @@ class Yogi: ObservableObject {
         } else {
             print("Saved Sessions is empty")
         }
+        
+        /*
+        switch longestStreak {
+        case 0...7: nextMilestone = 7
+        case 8...14: nextMilestone = 14
+        case 15...30: nextMilestone = 30
+        case 31...60: nextMilestone = 60
+        case 61...90: nextMilestone = 90
+        case 91...180: nextMilestone = 180
+        case 181...270: nextMilestone = 270
+        case 271...365: nextMilestone = 365
+        default: nextMilestone = 1000
+        }
+        
+        UserDefaults.standard.set(nextMilestone, forKey: "NextMilestone")
+        */
     }
     
     func resetData() {
@@ -108,6 +206,7 @@ class Yogi: ObservableObject {
         UserDefaults.standard.removeObject(forKey: "LongestStreak")
         UserDefaults.standard.removeObject(forKey: "TimePickerIndex")
         UserDefaults.standard.removeObject(forKey: "TimerStart")
+        UserDefaults.standard.removeObject(forKey: "NextMilestone")
         UserDefaults.standard.synchronize()
     }
 }

@@ -18,6 +18,15 @@ struct Streak: View {
         return p
     }
     
+    var showMilestone: Bool {
+        if yogi.currentStreak >= yogi.longestStreak ||
+            yogi.longestStreak == yogi.nextMilestone {
+            return true
+        } else {
+            return false
+        }
+    }
+    
     var body: some View {
         ZStack {
             VStack {
@@ -42,10 +51,10 @@ struct Streak: View {
                     Spacer()
                     // Next
                     VStack(alignment: .trailing, spacing: 0) {
-                        Text("\(yogi.longestStreak)")
+                        Text("\(showMilestone ? yogi.nextMilestone : yogi.longestStreak)")
                             .font(.system(size: 40, weight: .semibold, design: .serif))
                             .padding(.bottom, -2)
-                        Text("Longest streak")
+                        Text(showMilestone ? "Next Milestone" : "Longest streak")
                             .font(.system(size: 14))
                     }
                     .foregroundColor(.white)
@@ -71,6 +80,9 @@ struct Streak: View {
             .padding(.vertical, 24)
             .padding(.horizontal, 32)
         }
+        .onAppear(perform: {
+            yogi.updateStreak()
+        })
         .offset(y: appTimer.state == .off ? 0 : -10)
         .opacity(appTimer.state == .off ? 1.0 : 0.0)
     }

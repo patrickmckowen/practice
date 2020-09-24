@@ -63,7 +63,7 @@ struct Stats: View {
                                 Text("\(yogi.longestStreak)")
                                     .font(.system(size: 32, weight: .semibold, design: .serif))
                                     .foregroundColor(Color(#colorLiteral(red: 0.3019607843, green: 0.3019607843, blue: 0.3019607843, alpha: 1)))
-                                Text("Current Streak")
+                                Text("Longest Streak")
                                     .font(.subheadline)
                                     .foregroundColor(.gray)
                             }
@@ -76,7 +76,7 @@ struct Stats: View {
                 
                 // Badges
                 VStack {
-                    Text("Milestones")
+                    Text("Milestone Badges")
                         .font(.system(size: 16, weight: .semibold, design: .serif))
                         .foregroundColor(Color(#colorLiteral(red: 0.3019607843, green: 0.3019607843, blue: 0.3019607843, alpha: 1)))
                         .padding(.bottom, 16)

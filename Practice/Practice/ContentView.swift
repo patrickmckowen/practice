@@ -42,6 +42,7 @@ struct ContentView: View {
                 if appTimer.state == .completed {
                     SessionComplete()
                         .onAppear(perform: {
+                            guard appTimer.timeRemaining == 0 else { return }
                             saveSession()
                         })
                         .transition(.scale)
