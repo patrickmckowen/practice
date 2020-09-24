@@ -24,6 +24,7 @@
 		877B31C625151D1900698D88 /* TimerControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877B31C525151D1900698D88 /* TimerControls.swift */; };
 		877B31C925151D2700698D88 /* Yogi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877B31C825151D2700698D88 /* Yogi.swift */; };
 		87C56578251BF1E500B35BB7 /* Milestones.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87C56577251BF1E500B35BB7 /* Milestones.swift */; };
+		87D93CEE25229CD10056DB93 /* Quote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87D93CED25229CD10056DB93 /* Quote.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +47,7 @@
 		877B31C525151D1900698D88 /* TimerControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerControls.swift; sourceTree = "<group>"; };
 		877B31C825151D2700698D88 /* Yogi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Yogi.swift; sourceTree = "<group>"; };
 		87C56577251BF1E500B35BB7 /* Milestones.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Milestones.swift; sourceTree = "<group>"; };
+		87D93CED25229CD10056DB93 /* Quote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quote.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +87,7 @@
 				877B31AD25151C1900698D88 /* TimerRunning.swift */,
 				877B31B025151C5700698D88 /* DateExtension.swift */,
 				87C56577251BF1E500B35BB7 /* Milestones.swift */,
+				87D93CED25229CD10056DB93 /* Quote.swift */,
 				877B31B325151C7700698D88 /* SessionComplete.swift */,
 				877B31B625151C9400698D88 /* SessionList.swift */,
 				877B31B925151CB900698D88 /* Stats.swift */,
@@ -189,6 +192,7 @@
 				877B31C025151CFA00698D88 /* Styles.swift in Sources */,
 				877B31B125151C5700698D88 /* DateExtension.swift in Sources */,
 				877B319B25151B1200698D88 /* PracticeApp.swift in Sources */,
+				87D93CEE25229CD10056DB93 /* Quote.swift in Sources */,
 				873758FB251A6C890008CFC3 /* Playground.swift in Sources */,
 				877B31C925151D2700698D88 /* Yogi.swift in Sources */,
 				877B31AB25151BF000698D88 /* AppTimer.swift in Sources */,
