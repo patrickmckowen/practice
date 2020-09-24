@@ -172,7 +172,7 @@ struct TimerControls: View {
                                 Button("Log \(appTimer.formatTime(appTimer.timePassed)) sesion") {
                                     withAnimation(.spring()) {
                                         yogi.saveSession(date: Date(), duration: appTimer.timePassed)
-                                        appTimer.reset()
+                                        appTimer.state = .completed
                                     }
                                 }
                                 .buttonStyle(ButtonLight())

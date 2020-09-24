@@ -25,26 +25,36 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             ZStack {
-                // Blur background image when timer is running
+                
                 Blur(style: .systemUltraThinMaterialLight)
                     .edgesIgnoringSafeArea(.all)
                     .opacity(appTimer.state == .off ? 0.0 : 1.0)
-                 
                 
-                VStack() {
-                    if showStreak { Streak() }
-                    
-                    if isSessionComplete { SessionComplete() }
-                    
+                if showStreak {
+                    Streak()
+                        .padding(.horizontal, 16)
                 }
-                .frame(maxWidth: UIScreen.main.bounds.width, maxHeight: UIScreen.main.bounds.height)
                 
-                // Timer Controls
-                TimerControls(showTimePicker: $showTimePicker)
+                if appTimer.state != .completed {
+                    TimerControls(showTimePicker: $showTimePicker)
+                }
+                
+                if appTimer.state == .completed {
+                    SessionComplete()
+                        .onAppear(perform: {
+                            saveSession()
+                        })
+                        .transition(.scale)
+                }
             }
             .navigationBarHidden(true)
-            .background(Image("default")
-                            .edgesIgnoringSafeArea(.all))
+            .background(Image("default").edgesIgnoringSafeArea(.all))
+        }
+    }
+    
+    func saveSession() {
+        withAnimation(.spring()) {
+            yogi.saveSession(date: Date(), duration: appTimer.timePassed)
         }
     }
 }

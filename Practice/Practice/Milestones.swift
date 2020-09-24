@@ -48,14 +48,14 @@ struct MilestoneBadge: View {
             if !hasAchieved && !isLocked {
                 // Stroke Background
                 Circle()
-                    .stroke(lineWidth: isSmall ? 2 : 5.0)
+                    .stroke(lineWidth: isSmall ? 2 : 4.0)
                     .foregroundColor(Color.black.opacity(0.2))
                     .frame(width: isSmall ? 103 : 140)
                 
                 // Stroke Fill
                 Circle()
                     .trim(from: 0.0, to: CGFloat(min(progress, 1.0)))
-                    .stroke(gradient, style: StrokeStyle(lineWidth: isSmall ? 2 : 5.0, lineCap: .round, lineJoin: .round))
+                    .stroke(gradient, style: StrokeStyle(lineWidth: isSmall ? 2 : 4.0, lineCap: .round, lineJoin: .round))
                     .frame(width: isSmall ? 103 : 140)
                     .rotationEffect(Angle(degrees: 270.0))
                     .animation(.linear)
@@ -98,7 +98,7 @@ struct MilestoneBadge: View {
 struct Milestone_Previews: PreviewProvider {
     static var previews: some View {
         let yogi = Yogi()
-        return MilestoneBadge(isSmall: true, goal: 30, prevGoal: 14, currentStreak: yogi.currentStreak, longestStreak: yogi.longestStreak)
+        return MilestoneBadge(isSmall: false, goal: 30, prevGoal: 14, currentStreak: yogi.currentStreak, longestStreak: yogi.longestStreak)
             .environmentObject(yogi)
     }
 }
