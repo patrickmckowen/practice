@@ -35,6 +35,18 @@ class Yogi: ObservableObject {
     @Published var nextMilestone: Int = 7
     @Published var currentMilestone: Int = 7
     
+    var daysToNextMilestone: Int {
+        return nextMilestone - currentStreak
+    }
+    
+    var milestoneReached: Bool {
+        if currentStreak == nextMilestone {
+            return true
+        } else {
+            return false
+        }
+    }
+    
     func saveSession(date: Date, duration: TimeInterval) {
         let newSession = Session(date: date, duration: duration)
         sessions.append(newSession)

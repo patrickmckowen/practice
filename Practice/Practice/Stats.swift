@@ -22,7 +22,7 @@ struct Stats: View {
                 // Stats
                 VStack {
                     Text("Stats")
-                        .font(.system(size: 16, weight: .semibold, design: .serif))
+                        .font(.system(size: 18, weight: .semibold, design: .serif))
                         .foregroundColor(Color(#colorLiteral(red: 0.3019607843, green: 0.3019607843, blue: 0.3019607843, alpha: 1)))
                         .padding(.bottom, 16)
                     
@@ -71,14 +71,25 @@ struct Stats: View {
                         
                     } // End Stats
                 }
-                .padding(.vertical, 48)
+                .padding(.top, 48)
+                .padding(.bottom, 24)
                 .padding(.horizontal, 48)
                 
+                Rectangle()
+                    .fill(Color.black.opacity(0.05))
+                    .frame(maxHeight: 8)
+                
                 // Badges
-                VStack {
-                    Text("Milestone Badges")
-                        .font(.system(size: 16, weight: .semibold, design: .serif))
+                VStack() {
+                    Text("Streak Badges")
+                        .font(.system(size: 18, weight: .semibold, design: .serif))
                         .foregroundColor(Color(#colorLiteral(red: 0.3019607843, green: 0.3019607843, blue: 0.3019607843, alpha: 1)))
+                        .padding(.bottom, 1)
+                    Text("Earn badges by practicing for consecutive days. Next badge in \(yogi.daysToNextMilestone) sessions.")
+                        .multilineTextAlignment(.center)
+                        .font(.footnote)
+                        .foregroundColor(.gray)
+                        .padding(.horizontal, 32)
                         .padding(.bottom, 16)
                     
                     ScrollView(.horizontal) {
@@ -96,14 +107,19 @@ struct Stats: View {
                         .padding(.leading, 16)
                     }
                 } // End Badges
-                .padding(.bottom, 56)
+                .padding(.top, 24)
+                .padding(.bottom, 24)
+                
+                Rectangle()
+                    .fill(Color.black.opacity(0.05))
+                    .frame(maxHeight: 8)
                 
                 // Settings
                 // TODO: Save in UserDefaults
                 // TODO: // Add DatePicker to select prefered time
                 VStack {
                     Text("Settings")
-                        .font(.system(size: 16, weight: .semibold, design: .serif))
+                        .font(.system(size: 18, weight: .semibold, design: .serif))
                         .foregroundColor(Color(#colorLiteral(red: 0.3019607843, green: 0.3019607843, blue: 0.3019607843, alpha: 1)))
                         .padding(.bottom, 16)
                     
@@ -147,6 +163,7 @@ struct Stats: View {
                     
                     
                 } // end Settings VStack container
+                .padding(.top, 24)
                 
                 
             } // End Scrollview

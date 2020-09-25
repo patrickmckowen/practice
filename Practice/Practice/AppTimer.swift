@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import AVFoundation
 
 class AppTimer: ObservableObject {
     
@@ -42,6 +43,10 @@ class AppTimer: ObservableObject {
     func start() {
         guard state != .running else { return }
         
+        if state != .paused {
+            playSound(sound: "sound-forged-bowl", type: "mp3")
+        }
+        
         timer = Timer.scheduledTimer(
             timeInterval: 1,
             target: self,
@@ -60,6 +65,7 @@ class AppTimer: ObservableObject {
         if timeRemaining > 0 {
             timeRemaining -= 1
         } else {
+            playSound(sound: "sound-forged-bowl", type: "mp3")
             state = .completed
         }
     }

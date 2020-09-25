@@ -11,18 +11,6 @@ struct SessionComplete: View {
     @EnvironmentObject var yogi: Yogi
     @EnvironmentObject var appTimer: AppTimer
     
-    var daysToNextMilestone: Int {
-        return yogi.nextMilestone - yogi.currentStreak
-    }
-    
-    var milestoneReached: Bool {
-        if yogi.currentStreak == yogi.nextMilestone {
-            return true
-        } else {
-            return false
-        }
-    }
-    
     let gradient = LinearGradient(gradient:Gradient(colors: [Color(#colorLiteral(red: 1, green: 0.6078431373, blue: 0.4509803922, alpha: 1)), Color(#colorLiteral(red: 0.4901960784, green: 0.4196078431, blue: 0.8980392157, alpha: 1))]), startPoint: .topLeading, endPoint: .bottomTrailing)
     
     @State var expand = false
@@ -59,7 +47,7 @@ struct SessionComplete: View {
 
                             MilestoneBadge(isSmall: false, goal: yogi.currentMilestone, prevGoal: 0, currentStreak: yogi.currentStreak, longestStreak: yogi.longestStreak)
                                 .frame(maxHeight: 144)
-                            Text("You've reached a new milestone!")
+                            Text("You've earned a new streak badge!")
                                 .font(.subheadline)
                                 .foregroundColor(.gray)
                                 .offset(y: 92)
@@ -84,7 +72,7 @@ struct SessionComplete: View {
                     MilestoneBadge(isSmall: false, goal: yogi.nextMilestone, prevGoal: 0, currentStreak: yogi.currentStreak, longestStreak: yogi.longestStreak)
                         .frame(maxHeight: 144)
                         .padding(.bottom, 8)
-                    Text("Next milestone in \(daysToNextMilestone) days")
+                    Text("Next badge in \(yogi.daysToNextMilestone) sessions")
                         .font(.subheadline)
                         .foregroundColor(.gray)
                         .padding(.bottom, 24)
@@ -134,9 +122,6 @@ struct SessionComplete: View {
             }
             .buttonStyle(ButtonLight())
         }
-     //   .opacity(appTimer.state == .completed ? 1.0 : 0.0)
-     //   .scaleEffect(appTimer.state == .completed ? 1 : 0, anchor: .bottom)
-
     }
 }
 

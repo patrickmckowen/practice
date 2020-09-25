@@ -11,9 +11,16 @@ struct Streak: View {
     @EnvironmentObject var yogi: Yogi
     @EnvironmentObject var appTimer: AppTimer
     
-    var progressBarAmount: Double {
+    var progressToLongest: Double {
         let s = Double(yogi.currentStreak)
         let m = Double(yogi.longestStreak)
+        let p = s / m
+        return p
+    }
+    
+    var progressToMilestone: Double {
+        let s = Double(yogi.currentStreak)
+        let m = Double(yogi.nextMilestone)
         let p = s / m
         return p
     }
@@ -70,7 +77,7 @@ struct Streak: View {
                             .foregroundColor(Color.white.opacity(0.2))
                         
                         RoundedRectangle(cornerRadius: 5)
-                            .frame(width: geo.size.width * CGFloat(progressBarAmount), height: 5)
+                            .frame(width: geo.size.width * CGFloat(showMilestone ? progressToMilestone : progressToLongest), height: 5)
                             .foregroundColor(Color.white)
                     }
                 }
