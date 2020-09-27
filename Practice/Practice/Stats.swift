@@ -13,7 +13,7 @@ struct Stats: View {
     
     @Environment(\.presentationMode) var presentationMode
     
-    @State var appleHeathIsOn = UserDefaults.standard.bool(forKey: "AppleHealth")
+    @AppStorage("AppleHealthIsOn") var appleHealthIsOn: Bool = true
     @State var remindersIsOn = UserDefaults.standard.bool(forKey: "Reminders")
     
     var body: some View {
@@ -124,24 +124,58 @@ struct Stats: View {
                         .padding(.bottom, 16)
                     
                     // Apple Health
-                    Toggle(isOn: $appleHeathIsOn) {
-                        // Text
-                        VStack(alignment: .leading, spacing: 0) {
-                            Text("Apple Health")
-                                .font(.body)
-                                .padding(.bottom, 4)
-                                .padding(.top, 12)
-                            
-                            Text("Save your mindfulness minutes on Apple Health App.")
-                                .font(.footnote)
-                                .foregroundColor(.gray)
-                                .padding(.bottom, 12)
+                    if yogi.showAppleHealthButton {
+                        HStack(spacing: 0) {
+                            VStack(alignment: .leading, spacing: 0) {
+                                Text("Apple Health")
+                                    .font(.body)
+                                    .padding(.bottom, 4)
+                                    .padding(.top, 12)
+                                
+                                Text("Automatically sync your meditation sessions with Apple Health.")
+                                    .font(.footnote)
+                                    .foregroundColor(.gray)
+                                    .padding(.trailing, 4)
+                                    .padding(.bottom, 12)
+                            }
+                            .foregroundColor(.black)
+                            Spacer()
+                            Button("Turn On") {
+                                yogi.activateHealthKit()
+                            }
+                            .padding(.horizontal, 12)
+                            .frame(maxHeight: 36)
+                            .background(Color.green)
+                            .cornerRadius(20)
+                            .foregroundColor(.white)
+ 
                         }
-                        .foregroundColor(.black)
+                        .padding(.horizontal, 24)
                     }
-                    .padding(.horizontal, 24)
+                    if !yogi.showAppleHealthButton {
+                        Toggle(isOn: $appleHealthIsOn) {
+                            // Text
+                            VStack(alignment: .leading, spacing: 0) {
+                                Text("Apple Health")
+                                    .font(.body)
+                                    .padding(.bottom, 4)
+                                    .padding(.top, 12)
+                                
+                                Text("Automatically sync your meditation sessions with Apple Health.")
+                                    .font(.footnote)
+                                    .foregroundColor(.gray)
+                                    .padding(.trailing, 4)
+                                    .padding(.bottom, 12)
+                            }
+                            .foregroundColor(.black)
+                        }
+                        .padding(.horizontal, 24)
+                    }
+                    
                     // end Apple Health Toggle
                     
+                    /*
+                     // TODO: Add Notifications
                     // Divider
                     Rectangle()
                         .frame(maxWidth: .infinity, maxHeight: 1)
@@ -159,7 +193,8 @@ struct Stats: View {
                         .foregroundColor(.black)
                     }
                     .padding(.horizontal, 24)
-                    // end Apple Health Toggle
+                    // end Reminders Toggle
+                    */
                     
                     
                 } // end Settings VStack container
@@ -191,6 +226,10 @@ struct Stats: View {
                 }
         }
         .navigationBarHidden(true)
+    }
+    
+    func appleHealthButton() {
+        
     }
 }
 

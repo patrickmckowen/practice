@@ -20,23 +20,23 @@ class AppTimer: ObservableObject {
     var timer = Timer()
     @Published var state: TimerMode = .off
     
-    let lengthOptions = [5, 10, 15, 20, 30, 45, 60]
+    let lengthOptions = [1, 5, 10, 15, 20, 30, 45, 60]
     @Published var timePickerIndex = UserDefaults.standard.integer(forKey: "TimePickerIndex")    
-    @Published var timeRemaining: TimeInterval = UserDefaults.standard.double(forKey: "TimerStart")
-    @Published var timePassed: TimeInterval = 0
+    @Published var timeRemaining: Int = UserDefaults.standard.integer(forKey: "TimerStart")
+    @Published var timePassed: Int = 0
     
     func setTimerLength(_ index: Int) {
         let minutes = lengthOptions[index]
-        let seconds = Double(minutes) * 60
+        let seconds = minutes * 60
         timeRemaining = seconds
         
         let defaults = UserDefaults.standard
         defaults.set(timeRemaining, forKey: "TimerStart")
     }
     
-    func formatTime(_ time: TimeInterval) -> String {
-        let minutes = Int(time) / 60 % 60
-        let seconds = Int(time) % 60
+    func formatTime(_ time: Int) -> String {
+        let minutes = time / 60 % 60
+        let seconds = time % 60
         return String(format:"%01i:%02i", minutes, seconds)
     }
     
@@ -64,22 +64,24 @@ class AppTimer: ObservableObject {
         
         if timeRemaining > 0 {
             timeRemaining -= 1
-        } else {
-            playSound(sound: "sound-forged-bowl", type: "mp3")
+        }
+        
+        if timeRemaining == 0 {
+            timer.invalidate()
             state = .completed
         }
     }
     
     func pause() {
         guard state == .running else { return }
-        
+        stopSound(sound: "sound-forged-bowl", type: "mp3")
         timer.invalidate()
         state = .paused
     }
     
     func reset() {
         timer.invalidate()
-        timeRemaining = UserDefaults.standard.double(forKey: "TimerStart")
+        timeRemaining = UserDefaults.standard.integer(forKey: "TimerStart")
         timePassed = 0
         state = .off
     }
@@ -87,7 +89,7 @@ class AppTimer: ObservableObject {
     init() {
         // Set the timer to 5min for new users
         let defaults = UserDefaults.standard
-        if defaults.double(forKey: "TimerStart") == 0 {
+        if defaults.integer(forKey: "TimerStart") == 0 {
             timeRemaining = 300
             defaults.set(timeRemaining, forKey: "TimerStart")
         }

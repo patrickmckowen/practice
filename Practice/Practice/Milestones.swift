@@ -26,7 +26,7 @@ struct MilestoneBadge: View {
     }
     
     var isLocked: Bool {
-        if longestStreak <= prevGoal {
+        if longestStreak <= prevGoal && goal != 7 {
             return true
         } else {
             return false
@@ -49,7 +49,7 @@ struct MilestoneBadge: View {
                 // Stroke Background
                 Circle()
                     .stroke(lineWidth: isSmall ? 2 : 4.0)
-                    .foregroundColor(Color.black.opacity(0.2))
+                    .foregroundColor(Color.black.opacity(0.1))
                     .frame(width: isSmall ? 103 : 140)
                 
                 // Stroke Fill

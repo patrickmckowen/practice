@@ -43,6 +43,7 @@ struct ContentView: View {
                     SessionComplete()
                         .onAppear(perform: {
                             guard appTimer.timeRemaining == 0 else { return }
+                            playSound(sound: "sound-forged-bowl", type: "mp3")
                             saveSession()
                         })
                         .transition(.scale)

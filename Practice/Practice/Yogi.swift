@@ -6,11 +6,12 @@
 //
 
 import Foundation
+import HealthKit
 
 struct Session: Codable, Identifiable {
     var id = UUID()
     let date: Date
-    let duration: TimeInterval
+    let duration: Int
 }
 
 class Yogi: ObservableObject {
@@ -26,7 +27,7 @@ class Yogi: ObservableObject {
     }
     
     @Published var totalSessions: Int = 0
-    @Published var totalDuration: TimeInterval = 0
+    @Published var totalDuration: Int = 0
     @Published var lastSessionDate: Date?
     @Published var currentStreak: Int = UserDefaults.standard.integer(forKey: "CurrentStreak")
     @Published var longestStreak: Int = UserDefaults.standard.integer(forKey: "LongestStreak")
@@ -39,17 +40,54 @@ class Yogi: ObservableObject {
         return nextMilestone - currentStreak
     }
     
-    var milestoneReached: Bool {
-        if currentStreak == nextMilestone {
-            return true
-        } else {
-            return false
+    /*
+     var milestoneReached: Bool {
+     if currentStreak == nextMilestone {
+     return true
+     } else {
+     return false
+     }
+     }
+     */
+    
+    // HealthKit
+    @Published var showAppleHealthButton = true
+    let healthStore = HKHealthStore()
+    let mindfulType = HKObjectType.categoryType(forIdentifier: .mindfulSession)
+    let mindfulSession = HKCategoryTypeIdentifier.mindfulSession
+    
+    func activateHealthKit() {
+        let typestoShare = Set([
+            HKObjectType.categoryType(forIdentifier: HKCategoryTypeIdentifier.mindfulSession)!
+        ])
+        
+        self.healthStore.requestAuthorization(toShare: typestoShare, read: nil) { (success, error) -> Void in
+            if success {
+                self.showAppleHealthButton = false
+                UserDefaults.standard.set(self.showAppleHealthButton, forKey: "ShowAppleHealthButton")
+            }
         }
     }
     
-    func saveSession(date: Date, duration: TimeInterval) {
+    func saveSession(date: Date, duration: Int) {
         let newSession = Session(date: date, duration: duration)
         sessions.append(newSession)
+        
+        // Adding to Apple Health
+        // Check if permissions granted
+        let authorizationStatus = healthStore.authorizationStatus(for: HKObjectType.categoryType(forIdentifier: HKCategoryTypeIdentifier.mindfulSession)!)
+        if authorizationStatus == .sharingAuthorized &&
+            UserDefaults.standard.bool(forKey: "AppleHealthIsOn") == true {
+            let startTime = date
+            let endTime = date.addingTimeInterval(Double(duration))
+            let mindfullSample = HKCategorySample(type:mindfulType!, value: 0, start: startTime, end: endTime)
+            // Save it to the health store
+            healthStore.save(mindfullSample, withCompletion: { (success, error) -> Void in
+                if error != nil {return}
+                
+                print("New data was saved in HealthKit: \(success)")
+            })
+        }
         
         totalSessions += 1
         totalDuration += duration
@@ -69,7 +107,7 @@ class Yogi: ObservableObject {
                 currentStreak = 1
             }
         }
-
+        
         if currentStreak >= longestStreak {
             longestStreak = currentStreak
         }
@@ -182,22 +220,6 @@ class Yogi: ObservableObject {
         } else {
             print("Saved Sessions is empty")
         }
-        
-        /*
-        switch longestStreak {
-        case 0...7: nextMilestone = 7
-        case 8...14: nextMilestone = 14
-        case 15...30: nextMilestone = 30
-        case 31...60: nextMilestone = 60
-        case 61...90: nextMilestone = 90
-        case 91...180: nextMilestone = 180
-        case 181...270: nextMilestone = 270
-        case 271...365: nextMilestone = 365
-        default: nextMilestone = 1000
-        }
-        
-        UserDefaults.standard.set(nextMilestone, forKey: "NextMilestone")
-        */
     }
     
     func resetData() {
@@ -207,6 +229,7 @@ class Yogi: ObservableObject {
         UserDefaults.standard.removeObject(forKey: "TimePickerIndex")
         UserDefaults.standard.removeObject(forKey: "TimerStart")
         UserDefaults.standard.removeObject(forKey: "NextMilestone")
+        UserDefaults.standard.removeObject(forKey: "AppleHealthIsOn")
         UserDefaults.standard.synchronize()
     }
 }

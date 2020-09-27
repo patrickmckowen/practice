@@ -20,7 +20,7 @@ struct Playground: View {
         
         let timePassed = appTimer.timePassed
         
-        return Double(timePassed / countTo)
+        return Double(timePassed) / countTo
     }
     
     var body: some View {
