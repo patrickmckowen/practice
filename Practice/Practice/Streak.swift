@@ -19,7 +19,8 @@ struct Streak: View {
     }
     
     var showMilestone: Bool {
-        if yogi.currentStreak >= yogi.longestStreak ||
+        if yogi.nextMilestone <= 30 ||
+            yogi.currentStreak >= yogi.longestStreak ||
             yogi.longestStreak == yogi.nextMilestone {
             return true
         } else {
@@ -81,7 +82,8 @@ struct Streak: View {
             .padding(.horizontal, 32)
         }
         .onAppear(perform: {
-            yogi.updateStreak()
+            yogi.checkStreak()
+            yogi.updateMilestones()
         })
         .offset(y: appTimer.state == .off ? 0 : -10)
         .opacity(appTimer.state == .off ? 1.0 : 0.0)

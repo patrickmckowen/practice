@@ -45,10 +45,6 @@ class Yogi: ObservableObject {
         if currentStreak == 0 { currentStreak = 1}
         if longestStreak == 0 { longestStreak = 1 }
         
-        updateStreak()
-        lastSessionDate = date
-        
-        /*
         if currentStreak == 0 { currentStreak = 1}
         if longestStreak == 0 { longestStreak = 1 }
         
@@ -65,31 +61,28 @@ class Yogi: ObservableObject {
         if currentStreak >= longestStreak {
             longestStreak = currentStreak
         }
- */
         
+        lastSessionDate = date
         
-        /*
         let defaults = UserDefaults.standard
         defaults.set(currentStreak, forKey: "CurrentStreak")
         defaults.set(longestStreak, forKey: "LongestStreak")
- */
     }
     
-    func updateStreak() {
+    func checkStreak() {
         if let lastSession = lastSessionDate {
-            if lastSession.isYesterday {
-                currentStreak += 1
-            } else if lastSession.isToday {
-                return
+            if lastSession.isToday || lastSession.isYesterday {
+                currentStreak = UserDefaults.standard
+                    .integer(forKey: "CurrentStreak")
             } else {
-                currentStreak = 1
+                currentStreak = 0
+                let defaults = UserDefaults.standard
+                defaults.set(currentStreak, forKey: "CurrentStreak")
             }
         }
-
-        if currentStreak >= longestStreak {
-            longestStreak = currentStreak
-        }
-        
+    }
+    
+    func updateMilestones() {
         switch longestStreak {
         case 0..<7:
             nextMilestone = 7
@@ -151,11 +144,6 @@ class Yogi: ObservableObject {
             nextMilestone = 1000
             hitMilestone = false
         }
-        
-        let defaults = UserDefaults.standard
-        defaults.set(currentStreak, forKey: "CurrentStreak")
-        defaults.set(longestStreak, forKey: "LongestStreak")
-        defaults.set(nextMilestone, forKey: "NextMilestone")
     }
     
     init(){
