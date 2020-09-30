@@ -13,17 +13,76 @@ struct Stats: View {
     
     @Environment(\.presentationMode) var presentationMode
     
-    @AppStorage("AppleHealthIsOn") var appleHealthIsOn: Bool = true
-    @State var remindersIsOn = UserDefaults.standard.bool(forKey: "Reminders")
+    @AppStorage("ShowAppleHealthPromo") var showAppleHealthPromo = true
+    
+    let itemFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .short
+        return formatter
+    }()
+    
+    var formattedDuration: String {
+        let seconds = yogi.totalDuration
+        let minutes = seconds / 60
+        let hours = seconds / 3600
+        let remainderMinutes = (seconds % 3600) / 60
+        let minuteFractionOfHour = Double(remainderMinutes) / 60
+        let total = Double(hours) + minuteFractionOfHour
+        
+        if yogi.totalDuration < 3600 {
+            return String(minutes)
+        } else {
+            return String(format: "%.1f", total)
+        }
+    }
+    
+    var hoursOrMinutes: String {
+        switch yogi.totalDuration {
+        case 0..<3600: return "Minutes"
+        default: return "Hours"
+        }
+    }
+    
+    var hasFirstSession: Bool {
+        if yogi.sessions.count == 0 { return false }
+        else { return true }
+    }
     
     var body: some View {
-        ZStack {
+        VStack {
+            HStack(spacing: 16) {
+                Image(systemName: "chevron.left")
+                    .onTapGesture(perform: {
+                        self.presentationMode.wrappedValue.dismiss()
+                    })
+                Spacer()
+                Image(systemName: "trash")
+                    .onTapGesture(perform: {
+                        yogi.resetData()
+                    })
+                NavigationLink(
+                    destination: Settings(),
+                    label: {
+                        Image(systemName: "gearshape")
+                            .foregroundColor(.black)
+                    })
+                
+            }
+            .font(.title3)
+            .padding(.top, 12)
+            .padding(.horizontal, 24)
             ScrollView(.vertical) {
                 // Stats
                 VStack {
                     Text("Stats")
-                        .font(.system(size: 18, weight: .semibold, design: .serif))
+                        .font(.system(size: 20, weight: .semibold, design: .serif))
                         .foregroundColor(Color(#colorLiteral(red: 0.3019607843, green: 0.3019607843, blue: 0.3019607843, alpha: 1)))
+                        .padding(.bottom, 1)
+                    Text(hasFirstSession ? "Since \(yogi.firstSessionDate ?? Date(), formatter: itemFormatter)" : "Log your first meditation session today.")
+                        .fixedSize(horizontal: false, vertical: true)
+                        .multilineTextAlignment(.center)
+                        .font(.footnote)
+                        .foregroundColor(.gray)
                         .padding(.bottom, 16)
                     
                     HStack {
@@ -33,7 +92,7 @@ struct Stats: View {
                                 Text("\(yogi.totalSessions)")
                                     .font(.system(size: 32, weight: .semibold, design: .serif))
                                     .foregroundColor(Color(#colorLiteral(red: 0.3019607843, green: 0.3019607843, blue: 0.3019607843, alpha: 1)))
-                                Text("Total sessions")
+                                Text("Total Sessions")
                                     .font(.subheadline)
                                     .foregroundColor(.gray)
                             }
@@ -52,10 +111,10 @@ struct Stats: View {
                         // Right Column
                         VStack(spacing: 40) {
                             VStack(spacing: 0) {
-                                Text("\(appTimer.formatTime(yogi.totalDuration))")
+                                Text("\(formattedDuration)")
                                     .font(.system(size: 32, weight: .semibold, design: .serif))
                                     .foregroundColor(Color(#colorLiteral(red: 0.3019607843, green: 0.3019607843, blue: 0.3019607843, alpha: 1)))
-                                Text("Total minutes")
+                                Text("Total \(hoursOrMinutes)")
                                     .font(.subheadline)
                                     .foregroundColor(.gray)
                             }
@@ -68,11 +127,10 @@ struct Stats: View {
                                     .foregroundColor(.gray)
                             }
                         }
-                        
-                    } // End Stats
-                }
-                .padding(.top, 48)
-                .padding(.bottom, 24)
+                    }
+                } // End Stats
+                .padding(.top, 16)
+                .padding(.bottom, 32)
                 .padding(.horizontal, 48)
                 
                 Rectangle()
@@ -82,10 +140,11 @@ struct Stats: View {
                 // Badges
                 VStack() {
                     Text("Streak Badges")
-                        .font(.system(size: 18, weight: .semibold, design: .serif))
+                        .font(.system(size: 20, weight: .semibold, design: .serif))
                         .foregroundColor(Color(#colorLiteral(red: 0.3019607843, green: 0.3019607843, blue: 0.3019607843, alpha: 1)))
                         .padding(.bottom, 1)
                     Text("Earn badges by practicing for consecutive days. Next badge in \(yogi.daysToNextMilestone) sessions.")
+                        .fixedSize(horizontal: false, vertical: true)
                         .multilineTextAlignment(.center)
                         .font(.footnote)
                         .foregroundColor(.gray)
@@ -107,129 +166,20 @@ struct Stats: View {
                         .padding(.leading, 16)
                     }
                 } // End Badges
-                .padding(.top, 24)
-                .padding(.bottom, 24)
+                .padding(.vertical, 32)
                 
-                Rectangle()
-                    .fill(Color.black.opacity(0.05))
-                    .frame(maxHeight: 8)
-                
-                // Settings
-                // TODO: Save in UserDefaults
-                // TODO: // Add DatePicker to select prefered time
-                VStack {
-                    Text("Settings")
-                        .font(.system(size: 18, weight: .semibold, design: .serif))
-                        .foregroundColor(Color(#colorLiteral(red: 0.3019607843, green: 0.3019607843, blue: 0.3019607843, alpha: 1)))
-                        .padding(.bottom, 16)
-                    
-                    // Apple Health
-                    if yogi.showAppleHealthButton {
-                        HStack(spacing: 0) {
-                            VStack(alignment: .leading, spacing: 0) {
-                                Text("Apple Health")
-                                    .font(.body)
-                                    .padding(.bottom, 4)
-                                    .padding(.top, 12)
-                                
-                                Text("Automatically sync your meditation sessions with Apple Health.")
-                                    .font(.footnote)
-                                    .foregroundColor(.gray)
-                                    .padding(.trailing, 4)
-                                    .padding(.bottom, 12)
-                            }
-                            .foregroundColor(.black)
-                            Spacer()
-                            Button("Turn On") {
-                                yogi.activateHealthKit()
-                            }
-                            .padding(.horizontal, 12)
-                            .frame(maxHeight: 36)
-                            .background(Color.green)
-                            .cornerRadius(20)
-                            .foregroundColor(.white)
- 
-                        }
-                        .padding(.horizontal, 24)
-                    }
-                    if !yogi.showAppleHealthButton {
-                        Toggle(isOn: $appleHealthIsOn) {
-                            // Text
-                            VStack(alignment: .leading, spacing: 0) {
-                                Text("Apple Health")
-                                    .font(.body)
-                                    .padding(.bottom, 4)
-                                    .padding(.top, 12)
-                                
-                                Text("Automatically sync your meditation sessions with Apple Health.")
-                                    .font(.footnote)
-                                    .foregroundColor(.gray)
-                                    .padding(.trailing, 4)
-                                    .padding(.bottom, 12)
-                            }
-                            .foregroundColor(.black)
-                        }
-                        .padding(.horizontal, 24)
-                    }
-                    
-                    // end Apple Health Toggle
-                    
-                    /*
-                     // TODO: Add Notifications
-                    // Divider
-                    Rectangle()
-                        .frame(maxWidth: .infinity, maxHeight: 1)
-                        .foregroundColor(Color.black.opacity(0.1))
-                        .padding(.leading, 32)
-                    
-                    // Reminders
-                    Toggle(isOn: $remindersIsOn) {
-                        // Text
-                        VStack(alignment: .leading) {
-                            Text("Reminders")
-                                .font(.body)
-                                .padding(.vertical, 12)
-                        }
-                        .foregroundColor(.black)
-                    }
-                    .padding(.horizontal, 24)
-                    // end Reminders Toggle
-                    */
-                    
-                    
-                } // end Settings VStack container
-                .padding(.top, 24)
+                if showAppleHealthPromo {
+                    AppleHealthPromo()
+                        .opacity(showAppleHealthPromo ? 1.0 : 0.0)
+                        .animation(.easeOut)
+                }
                 
                 
             } // End Scrollview
             
-            // TODO: Remove test controls
-            Image(systemName: "trash")
-                .position(x: UIScreen.main.bounds.width - 56, y: 0)
-                .font(.system(size: 24))
-                .foregroundColor(.black)
-                .padding(.horizontal, 24)
-                .padding(.top, 16)
-                .onTapGesture {
-                    yogi.resetData()
-                }
-            
-            // Back Button
-            Image(systemName: "chevron.left")
-                .position(x: 8, y: 0)
-                .font(.system(size: 24))
-                .foregroundColor(.black)
-                .padding(.horizontal, 24)
-                .padding(.top, 16)
-                .onTapGesture {
-                    presentationMode.wrappedValue.dismiss()
-                }
+            .navigationBarBackButtonHidden(true)
+            .navigationBarHidden(true)
         }
-        .navigationBarHidden(true)
-    }
-    
-    func appleHealthButton() {
-        
     }
 }
 

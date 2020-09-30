@@ -49,6 +49,7 @@ struct ContentView: View {
                         .transition(.scale)
                 }
             }
+            .navigationBarBackButtonHidden(true)
             .navigationBarHidden(true)
             .background(Image("default").edgesIgnoringSafeArea(.all))
         }

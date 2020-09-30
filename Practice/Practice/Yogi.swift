@@ -15,6 +15,8 @@ struct Session: Codable, Identifiable {
 }
 
 class Yogi: ObservableObject {
+    
+    // Save meditation sessions in user defaults
     @Published var sessions = [Session]() {
         didSet {
             let enc = JSONEncoder()
@@ -26,8 +28,10 @@ class Yogi: ObservableObject {
         }
     }
     
+    // Meditation stats
     @Published var totalSessions: Int = 0
     @Published var totalDuration: Int = 0
+    @Published var firstSessionDate: Date?
     @Published var lastSessionDate: Date?
     @Published var currentStreak: Int = UserDefaults.standard.integer(forKey: "CurrentStreak")
     @Published var longestStreak: Int = UserDefaults.standard.integer(forKey: "LongestStreak")
@@ -40,31 +44,21 @@ class Yogi: ObservableObject {
         return nextMilestone - currentStreak
     }
     
-    /*
-     var milestoneReached: Bool {
-     if currentStreak == nextMilestone {
-     return true
-     } else {
-     return false
-     }
-     }
-     */
-    
     // HealthKit
-    @Published var showAppleHealthButton = true
+    
     let healthStore = HKHealthStore()
-    let mindfulType = HKObjectType.categoryType(forIdentifier: .mindfulSession)
-    let mindfulSession = HKCategoryTypeIdentifier.mindfulSession
+    let mindfulObject = HKObjectType.categoryType(forIdentifier: .mindfulSession)
+    let mindfulIdentifier = HKCategoryTypeIdentifier.mindfulSession
     
     func activateHealthKit() {
         let typestoShare = Set([
-            HKObjectType.categoryType(forIdentifier: HKCategoryTypeIdentifier.mindfulSession)!
+            HKObjectType.categoryType(forIdentifier: mindfulIdentifier)!
         ])
         
         self.healthStore.requestAuthorization(toShare: typestoShare, read: nil) { (success, error) -> Void in
             if success {
-                self.showAppleHealthButton = false
-                UserDefaults.standard.set(self.showAppleHealthButton, forKey: "ShowAppleHealthButton")
+                print("Successfully authorized health kit")
+                UserDefaults.standard.set(false, forKey: "ShowAppleHealthPromo")
             }
         }
     }
@@ -74,18 +68,15 @@ class Yogi: ObservableObject {
         sessions.append(newSession)
         
         // Adding to Apple Health
-        // Check if permissions granted
-        let authorizationStatus = healthStore.authorizationStatus(for: HKObjectType.categoryType(forIdentifier: HKCategoryTypeIdentifier.mindfulSession)!)
-        if authorizationStatus == .sharingAuthorized &&
-            UserDefaults.standard.bool(forKey: "AppleHealthIsOn") == true {
+        if UserDefaults.standard.bool(forKey: "AppleHealthIsOn") == true {
             let startTime = date
             let endTime = date.addingTimeInterval(Double(duration))
-            let mindfullSample = HKCategorySample(type:mindfulType!, value: 0, start: startTime, end: endTime)
-            // Save it to the health store
+            let mindfullSample = HKCategorySample(type: mindfulObject!, value: 0, start: startTime, end: endTime)
+            
             healthStore.save(mindfullSample, withCompletion: { (success, error) -> Void in
-                if error != nil {return}
-                
-                print("New data was saved in HealthKit: \(success)")
+                if success {
+                print("\(duration) mindful seconds were saved in HealthKit")
+                }
             })
         }
         
@@ -93,10 +84,10 @@ class Yogi: ObservableObject {
         totalDuration += duration
         
         if currentStreak == 0 { currentStreak = 1}
-        if longestStreak == 0 { longestStreak = 1 }
-        
-        if currentStreak == 0 { currentStreak = 1}
-        if longestStreak == 0 { longestStreak = 1 }
+        if longestStreak == 0 {
+            firstSessionDate = Date()
+            longestStreak = 1
+        }
         
         if let lastSession = lastSessionDate {
             if lastSession.isYesterday {
@@ -230,6 +221,7 @@ class Yogi: ObservableObject {
         UserDefaults.standard.removeObject(forKey: "TimerStart")
         UserDefaults.standard.removeObject(forKey: "NextMilestone")
         UserDefaults.standard.removeObject(forKey: "AppleHealthIsOn")
+        UserDefaults.standard.removeObject(forKey: "ShowAppleHealthPromo")
         UserDefaults.standard.synchronize()
     }
 }

@@ -19,6 +19,19 @@ struct ButtonLight: ButtonStyle {
     }
 }
 
+struct ButtonLightSmall: ButtonStyle {
+    public func makeBody(configuration: Self.Configuration) -> some View {
+        configuration.label
+            .foregroundColor(.black)
+            .padding(.horizontal, 32)
+            .frame(height: 48)
+            .background(Color.white)
+            .cornerRadius(8)
+             .shadow(color: Color(#colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.1)), radius:4, x:0, y:0)
+           //  .shadow(color: Color(#colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.15)), radius:8, x:0, y:2)
+    }
+}
+
 struct Blur: UIViewRepresentable {
     var style: UIBlurEffect.Style = .systemMaterial
     func makeUIView(context: Context) -> UIVisualEffectView {
