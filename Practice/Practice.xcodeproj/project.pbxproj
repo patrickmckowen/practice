@@ -28,6 +28,7 @@
 		87C56578251BF1E500B35BB7 /* Milestones.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87C56577251BF1E500B35BB7 /* Milestones.swift */; };
 		87D65BB6251E6B5200BC1429 /* sound-forged-bowl.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 87D65BB5251E6B5200BC1429 /* sound-forged-bowl.mp3 */; };
 		87D65BB9251E6B6F00BC1429 /* AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87D65BB8251E6B6F00BC1429 /* AudioPlayer.swift */; };
+		87F051FC25263CA600BE5F74 /* AsyncImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F051FB25263CA600BE5F74 /* AsyncImage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -55,6 +56,7 @@
 		87C56577251BF1E500B35BB7 /* Milestones.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Milestones.swift; sourceTree = "<group>"; };
 		87D65BB5251E6B5200BC1429 /* sound-forged-bowl.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "sound-forged-bowl.mp3"; sourceTree = "<group>"; };
 		87D65BB8251E6B6F00BC1429 /* AudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayer.swift; sourceTree = "<group>"; };
+		87F051FB25263CA600BE5F74 /* AsyncImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncImage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +103,7 @@
 				87D65BB4251E6B4100BC1429 /* Sounds */,
 				87AA8A4D251948A500A47B52 /* Fonts */,
 				877B319A25151B1200698D88 /* PracticeApp.swift */,
+				87F051FB25263CA600BE5F74 /* AsyncImage.swift */,
 				877B31AA25151BF000698D88 /* AppTimer.swift */,
 				875C8A432523EF7C0021466A /* AppleHealthPromo.swift */,
 				87D65BB8251E6B6F00BC1429 /* AudioPlayer.swift */,
@@ -231,6 +234,7 @@
 				877B31BD25151CE500698D88 /* Streak.swift in Sources */,
 				877B31C325151D0800698D88 /* TimePicker.swift in Sources */,
 				87D65BB9251E6B6F00BC1429 /* AudioPlayer.swift in Sources */,
+				87F051FC25263CA600BE5F74 /* AsyncImage.swift in Sources */,
 				877B31B425151C7700698D88 /* SessionComplete.swift in Sources */,
 				877B31C625151D1900698D88 /* TimerControls.swift in Sources */,
 				875C8A442523EF7C0021466A /* AppleHealthPromo.swift in Sources */,

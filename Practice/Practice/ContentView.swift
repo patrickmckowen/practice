@@ -8,19 +8,18 @@
 import SwiftUI
 
 struct ContentView: View {
+    
     @EnvironmentObject var yogi: Yogi
     @EnvironmentObject var appTimer: AppTimer
     
-    @State private var timePickerIndex = 0
-    
-    @Namespace private var playAnimation
-    @State var playTapped = false
+    let url = URL(string: "https://images.unsplash.com/photo-1485841938031-1bf81239b815")!
     
     @State private var showStreak = true
-    @State private var showCountdown = false
-    @State private var showTimePicker = false
     @State private var showTimerControls = true
+    @State private var showTimePicker = false
     @State private var isSessionComplete = false
+    
+    @Namespace private var playAnimation
     
     var body: some View {
         NavigationView {
@@ -32,11 +31,12 @@ struct ContentView: View {
                 
                 if showStreak {
                     Streak()
-                        .padding(.horizontal, 16)
+                        .transition(AnyTransition.opacity.combined(with: .move(edge: .top)))
                 }
                 
-                if appTimer.state != .completed {
+                if appTimer.state != .completed && showTimerControls {
                     TimerControls(showTimePicker: $showTimePicker)
+                        .transition(AnyTransition.opacity.combined(with: .move(edge: .bottom)))
                 }
                 
                 if appTimer.state == .completed {
@@ -44,21 +44,30 @@ struct ContentView: View {
                         .onAppear(perform: {
                             guard appTimer.timeRemaining == 0 else { return }
                             playSound(sound: "sound-forged-bowl", type: "mp3")
-                            saveSession()
+                            withAnimation(.spring()) {
+                                yogi.saveSession(date: Date(), duration: appTimer.timePassed)
+                            }
                         })
                         .transition(.scale)
                 }
             }
             .navigationBarBackButtonHidden(true)
             .navigationBarHidden(true)
-            .background(Image("default").edgesIgnoringSafeArea(.all))
-        }
-    }
-    
-    func saveSession() {
-        withAnimation(.spring()) {
-            yogi.saveSession(date: Date(), duration: appTimer.timePassed)
-        }
+            .background(
+                AsyncImage(url: url, placeholder: {
+                    ZStack {
+                        Color.black
+                            .frame(width: UIScreen.main.bounds.width)
+                        Text("Breath")
+                            .font(.system(size: 32, weight: .semibold, design: .serif))
+                            .foregroundColor(Color.white.opacity(0.4))
+                    }
+                })
+                .scaledToFill()
+                .edgesIgnoringSafeArea(.all)
+            )
+            
+        } // End NavigationView
     }
 }
 

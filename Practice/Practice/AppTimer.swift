@@ -20,7 +20,7 @@ class AppTimer: ObservableObject {
     var timer = Timer()
     @Published var state: TimerMode = .off
     
-    let lengthOptions = [1, 5, 10, 15, 20, 30, 45, 60]
+    let lengthOptions = [5, 10, 15, 20, 30, 45, 60]
     @Published var timePickerIndex = UserDefaults.standard.integer(forKey: "TimePickerIndex")    
     @Published var timeRemaining: Int = UserDefaults.standard.integer(forKey: "TimerStart")
     @Published var timePassed: Int = 0

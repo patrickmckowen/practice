@@ -15,12 +15,6 @@ struct Stats: View {
     
     @AppStorage("ShowAppleHealthPromo") var showAppleHealthPromo = true
     
-    let itemFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .short
-        return formatter
-    }()
-    
     var formattedDuration: String {
         let seconds = yogi.totalDuration
         let minutes = seconds / 60
@@ -43,9 +37,14 @@ struct Stats: View {
         }
     }
     
-    var hasFirstSession: Bool {
-        if yogi.sessions.count == 0 { return false }
-        else { return true }
+    var sinceFirstSession: String {
+        if let date = UserDefaults.standard.object(forKey: "FirstSessionDate") as? Date {
+                let df = DateFormatter()
+                df.dateFormat = "MM/dd/yy"
+                return "Since " + df.string(from: date)
+            } else {
+                return "Log your first meditation session today."
+            }
     }
     
     var body: some View {
@@ -78,7 +77,7 @@ struct Stats: View {
                         .font(.system(size: 20, weight: .semibold, design: .serif))
                         .foregroundColor(Color(#colorLiteral(red: 0.3019607843, green: 0.3019607843, blue: 0.3019607843, alpha: 1)))
                         .padding(.bottom, 1)
-                    Text(hasFirstSession ? "Since \(yogi.firstSessionDate ?? Date(), formatter: itemFormatter)" : "Log your first meditation session today.")
+                    Text(sinceFirstSession)
                         .fixedSize(horizontal: false, vertical: true)
                         .multilineTextAlignment(.center)
                         .font(.footnote)

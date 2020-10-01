@@ -23,15 +23,16 @@ class Yogi: ObservableObject {
             if let encoded = try? enc.encode(sessions) {
                 UserDefaults.standard.set(encoded, forKey: "Sessions")
             } else {
-                print("ERROR in encoding")
+                print("ERROR in encoding sessions")
             }
         }
     }
     
+    @Published var firstSessionDate = UserDefaults.standard.object(forKey: "FirstSessionDate")
+    
     // Meditation stats
     @Published var totalSessions: Int = 0
     @Published var totalDuration: Int = 0
-    @Published var firstSessionDate: Date?
     @Published var lastSessionDate: Date?
     @Published var currentStreak: Int = UserDefaults.standard.integer(forKey: "CurrentStreak")
     @Published var longestStreak: Int = UserDefaults.standard.integer(forKey: "LongestStreak")
@@ -49,6 +50,32 @@ class Yogi: ObservableObject {
     let healthStore = HKHealthStore()
     let mindfulObject = HKObjectType.categoryType(forIdentifier: .mindfulSession)
     let mindfulIdentifier = HKCategoryTypeIdentifier.mindfulSession
+    
+    init(){
+        if let savedSessions = UserDefaults.standard.object(forKey: "Sessions") as? Data {
+            let decoder = JSONDecoder()
+            if let loadedSessions = try? decoder.decode([Session].self, from: savedSessions) {
+                sessions = loadedSessions
+                totalSessions = loadedSessions.count
+                totalDuration = sessions.reduce(0) { $0 + $1.duration }
+                lastSessionDate = loadedSessions.last?.date
+                if let lastSession = lastSessionDate {
+                    if lastSession.isToday || lastSession.isYesterday {
+                        currentStreak = UserDefaults.standard
+                            .integer(forKey: "CurrentStreak")
+                    } else {
+                        currentStreak = 0
+                        let defaults = UserDefaults.standard
+                        defaults.set(currentStreak, forKey: "CurrentStreak")
+                    }
+                }
+                
+            } else {
+                print("Error decoding Sessions")}
+        } else {
+            print("Saved Sessions is empty")
+        }
+    }
     
     func activateHealthKit() {
         let typestoShare = Set([
@@ -83,11 +110,8 @@ class Yogi: ObservableObject {
         totalSessions += 1
         totalDuration += duration
         
-        if currentStreak == 0 { currentStreak = 1}
-        if longestStreak == 0 {
-            firstSessionDate = Date()
-            longestStreak = 1
-        }
+        if currentStreak == 0 { currentStreak = 1 }
+        if longestStreak == 0 { longestStreak = 1 }
         
         if let lastSession = lastSessionDate {
             if lastSession.isYesterday {
@@ -108,6 +132,9 @@ class Yogi: ObservableObject {
         let defaults = UserDefaults.standard
         defaults.set(currentStreak, forKey: "CurrentStreak")
         defaults.set(longestStreak, forKey: "LongestStreak")
+        if sessions.count == 1 {
+            defaults.set(date, forKey: "FirstSessionDate")
+        }
     }
     
     func checkStreak() {
@@ -187,32 +214,6 @@ class Yogi: ObservableObject {
         }
     }
     
-    init(){
-        if let savedSessions = UserDefaults.standard.object(forKey: "Sessions") as? Data {
-            let decoder = JSONDecoder()
-            if let loadedSessions = try? decoder.decode([Session].self, from: savedSessions) {
-                sessions = loadedSessions
-                totalSessions = loadedSessions.count
-                totalDuration = sessions.reduce(0) { $0 + $1.duration }
-                lastSessionDate = loadedSessions.last?.date
-                if let lastSession = lastSessionDate {
-                    if lastSession.isToday || lastSession.isYesterday {
-                        currentStreak = UserDefaults.standard
-                            .integer(forKey: "CurrentStreak")
-                    } else {
-                        currentStreak = 0
-                        let defaults = UserDefaults.standard
-                        defaults.set(currentStreak, forKey: "CurrentStreak")
-                    }
-                }
-                
-            } else {
-                print("Error decoding Sessions")}
-        } else {
-            print("Saved Sessions is empty")
-        }
-    }
-    
     func resetData() {
         UserDefaults.standard.removeObject(forKey: "Sessions")
         UserDefaults.standard.removeObject(forKey: "CurrentStreak")
@@ -222,6 +223,7 @@ class Yogi: ObservableObject {
         UserDefaults.standard.removeObject(forKey: "NextMilestone")
         UserDefaults.standard.removeObject(forKey: "AppleHealthIsOn")
         UserDefaults.standard.removeObject(forKey: "ShowAppleHealthPromo")
+        UserDefaults.standard.removeObject(forKey: "FirstSessionDate")
         UserDefaults.standard.synchronize()
     }
 }

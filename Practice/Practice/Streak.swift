@@ -37,6 +37,7 @@ struct Streak: View {
     
     var body: some View {
         ZStack {
+            
             VStack {
                 LinearGradient(gradient: Gradient(colors: [Color.black, Color.black.opacity(0.0)]), startPoint: .top, endPoint: .bottom)
                     .edgesIgnoringSafeArea(.top)
@@ -50,7 +51,7 @@ struct Streak: View {
                     // Current
                     VStack(alignment: .leading, spacing: 0) {
                         Text("\(yogi.currentStreak)")
-                            .font(.system(size: 40, weight: .semibold, design: .serif))
+                            .font(.system(size: 48, weight: .semibold, design: .serif))
                             .padding(.bottom, -2)
                         Text("Day streak")
                             .font(.system(size: 14))
@@ -60,7 +61,7 @@ struct Streak: View {
                     // Next
                     VStack(alignment: .trailing, spacing: 0) {
                         Text("\(showMilestone ? yogi.nextMilestone : yogi.longestStreak)")
-                            .font(.system(size: 40, weight: .semibold, design: .serif))
+                            .font(.system(size: 48, weight: .semibold, design: .serif))
                             .padding(.bottom, -2)
                         Text(showMilestone ? "Next Milestone" : "Longest streak")
                             .font(.system(size: 14))

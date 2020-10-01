@@ -47,7 +47,7 @@ struct TimerControls: View {
             // Timer Off
             VStack {
                 Spacer()
-                HStack(spacing: 20) {
+                HStack(spacing: 0) {
                     // Duration
                     Button(action: {
                         withAnimation(.spring(response: 0.35)) {
@@ -60,7 +60,6 @@ struct TimerControls: View {
                     }
                     .foregroundColor(.white)
                     .shadow(color: Color.black.opacity(0.1), radius: 2.0, x: /*@START_MENU_TOKEN@*/0.0/*@END_MENU_TOKEN@*/, y: 1.0)
-                    .padding(.leading, 48)
                     .frame(width: UIScreen.main.bounds.width / 3)
                     // end Duration
                     
@@ -68,7 +67,7 @@ struct TimerControls: View {
                     if appTimer.state == .off {
                         ZStack {
                             Circle()
-                                .frame(width: 80, height: 80)
+                                .frame(width: 88, height: 88)
                                 .foregroundColor(.white)
                                 .shadow(color: Color/*@START_MENU_TOKEN@*/.black/*@END_MENU_TOKEN@*/.opacity(0.08), radius: 8, x: /*@START_MENU_TOKEN@*/0.0/*@END_MENU_TOKEN@*/, y: 4.0)
                             Image(systemName: "play.fill")
@@ -101,7 +100,6 @@ struct TimerControls: View {
                         })
                         .foregroundColor(.white)
                         .shadow(color: Color.black.opacity(0.1), radius: 2.0, x: /*@START_MENU_TOKEN@*/0.0/*@END_MENU_TOKEN@*/, y: 1.0)
-                        .padding(.trailing, 48)
                         .frame(width: UIScreen.main.bounds.width / 3)
                     // end Stats
                 }
