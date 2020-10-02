@@ -45,6 +45,10 @@ class Yogi: ObservableObject {
         return nextMilestone - currentStreak
     }
     
+    // Background Images
+    @Published var images: [BackgroundImage] = Bundle.main.decode("images.json")
+    @Published var isDarkImage: Bool = true
+    
     // HealthKit
     
     let healthStore = HKHealthStore()
@@ -67,6 +71,7 @@ class Yogi: ObservableObject {
                         currentStreak = 0
                         let defaults = UserDefaults.standard
                         defaults.set(currentStreak, forKey: "CurrentStreak")
+                        images.shuffle()
                     }
                 }
                 
@@ -146,6 +151,7 @@ class Yogi: ObservableObject {
                 currentStreak = 0
                 let defaults = UserDefaults.standard
                 defaults.set(currentStreak, forKey: "CurrentStreak")
+                images.shuffle()
             }
         }
     }

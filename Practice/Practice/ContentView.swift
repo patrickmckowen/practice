@@ -11,8 +11,10 @@ struct ContentView: View {
     
     @EnvironmentObject var yogi: Yogi
     @EnvironmentObject var appTimer: AppTimer
-    
-    let url = URL(string: "https://images.unsplash.com/photo-1485841938031-1bf81239b815")!
+
+    var imageURL: URL {
+        return URL(string: "\(yogi.images[yogi.currentStreak].url)")!
+    }
     
     @State private var showStreak = true
     @State private var showTimerControls = true
@@ -25,7 +27,7 @@ struct ContentView: View {
         NavigationView {
             ZStack {
                 
-                Blur(style: .systemUltraThinMaterialLight)
+                Blur(style: yogi.isDarkImage ? .systemUltraThinMaterialLight : .systemUltraThinMaterialDark)
                     .edgesIgnoringSafeArea(.all)
                     .opacity(appTimer.state == .off ? 0.0 : 1.0)
                 
@@ -54,13 +56,13 @@ struct ContentView: View {
             .navigationBarBackButtonHidden(true)
             .navigationBarHidden(true)
             .background(
-                AsyncImage(url: url, placeholder: {
+                AsyncImage(url: imageURL, placeholder: {
                     ZStack {
-                        Color.black
+                        Rectangle().fill(yogi.isDarkImage ? Color.black : Color.white)
                             .frame(width: UIScreen.main.bounds.width)
                         Text("Breath")
-                            .font(.system(size: 32, weight: .semibold, design: .serif))
-                            .foregroundColor(Color.white.opacity(0.4))
+                            .font(.system(size: 20, weight: .semibold, design: .serif))
+                            .foregroundColor(yogi.isDarkImage ? Color.white.opacity(0.4) : Color.black.opacity(0.4))
                     }
                 })
                 .scaledToFill()
@@ -68,6 +70,20 @@ struct ContentView: View {
             )
             
         } // End NavigationView
+        .onAppear(perform: {
+            setup()
+        })
+        .onDisappear(perform: {
+            setup()
+        })
+    }
+    
+    func setup() {
+        yogi.checkStreak()
+        let img = yogi.images[yogi.currentStreak]
+        if img.theme == "light" {
+            yogi.isDarkImage = false
+        }
     }
 }
 

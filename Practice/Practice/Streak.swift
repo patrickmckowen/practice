@@ -35,11 +35,19 @@ struct Streak: View {
         }
     }
     
+    var gradient: Gradient {
+        if yogi.isDarkImage {
+           return Gradient(colors: [Color.black, Color.black.opacity(0.0)])
+        } else {
+            return Gradient(colors: [Color.white, Color.white.opacity(0.0)])
+        }
+    }
+    
     var body: some View {
         ZStack {
             
             VStack {
-                LinearGradient(gradient: Gradient(colors: [Color.black, Color.black.opacity(0.0)]), startPoint: .top, endPoint: .bottom)
+                LinearGradient(gradient: gradient, startPoint: .top, endPoint: .bottom)
                     .edgesIgnoringSafeArea(.top)
                     .frame(height: 220)
                 Spacer()
@@ -56,7 +64,7 @@ struct Streak: View {
                         Text("Day streak")
                             .font(.system(size: 14))
                     }
-                    .foregroundColor(.white)
+                    .foregroundColor(yogi.isDarkImage ? Color.white : Color.black)
                     Spacer()
                     // Next
                     VStack(alignment: .trailing, spacing: 0) {
@@ -66,7 +74,7 @@ struct Streak: View {
                         Text(showMilestone ? "Next Milestone" : "Longest streak")
                             .font(.system(size: 14))
                     }
-                    .foregroundColor(.white)
+                    .foregroundColor(yogi.isDarkImage ? Color.white : Color.black)
                     
                 } // end Streak Numbers
                 
@@ -75,11 +83,11 @@ struct Streak: View {
                     ZStack(alignment: .leading) {
                         RoundedRectangle(cornerRadius: 5)
                             .frame(width: geo.size.width , height: 5)
-                            .foregroundColor(Color.white.opacity(0.2))
+                            .foregroundColor(yogi.isDarkImage ? Color.white.opacity(0.2) : Color.black.opacity(0.2))
                         
                         RoundedRectangle(cornerRadius: 5)
                             .frame(width: geo.size.width * CGFloat(showMilestone ? progressToMilestone : progressToLongest), height: 5)
-                            .foregroundColor(Color.white)
+                            .foregroundColor(yogi.isDarkImage ? Color.white : Color.black)
                     }
                 }
                 .padding(.top, 8)

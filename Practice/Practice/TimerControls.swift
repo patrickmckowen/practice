@@ -67,7 +67,7 @@ struct TimerControls: View {
                     if appTimer.state == .off {
                         ZStack {
                             Circle()
-                                .frame(width: 88, height: 88)
+                                .frame(width: 80, height: 80)
                                 .foregroundColor(.white)
                                 .shadow(color: Color/*@START_MENU_TOKEN@*/.black/*@END_MENU_TOKEN@*/.opacity(0.08), radius: 8, x: /*@START_MENU_TOKEN@*/0.0/*@END_MENU_TOKEN@*/, y: 4.0)
                             Image(systemName: "play.fill")
