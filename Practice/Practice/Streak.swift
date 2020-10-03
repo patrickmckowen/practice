@@ -61,6 +61,7 @@ struct Streak: View {
                         Text("\(yogi.currentStreak)")
                             .font(.system(size: 48, weight: .semibold, design: .serif))
                             .padding(.bottom, -2)
+                            
                         Text("Day streak")
                             .font(.system(size: 14))
                     }
@@ -98,7 +99,7 @@ struct Streak: View {
             .padding(.horizontal, 32)
         }
         .onAppear(perform: {
-            yogi.checkStreak()
+            yogi.updateStreak()
             yogi.updateMilestones()
         })
         .offset(y: appTimer.state == .off ? 0 : -10)

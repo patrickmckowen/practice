@@ -82,6 +82,28 @@ class Yogi: ObservableObject {
         }
     }
     
+    func updateStreak() {
+        if let lastSession = lastSessionDate {
+            if lastSession.isToday || lastSession.isYesterday {
+                currentStreak = UserDefaults.standard
+                    .integer(forKey: "CurrentStreak")
+            } else {
+                currentStreak = 0
+                let defaults = UserDefaults.standard
+                defaults.set(currentStreak, forKey: "CurrentStreak")
+                images.shuffle()
+            }
+        }
+    }
+    
+    func updateImage() {
+        let img = images[currentStreak]
+        
+        if img.theme == "light" {
+            isDarkImage = false
+        }
+    }
+    
     func activateHealthKit() {
         let typestoShare = Set([
             HKObjectType.categoryType(forIdentifier: mindfulIdentifier)!
@@ -139,20 +161,6 @@ class Yogi: ObservableObject {
         defaults.set(longestStreak, forKey: "LongestStreak")
         if sessions.count == 1 {
             defaults.set(date, forKey: "FirstSessionDate")
-        }
-    }
-    
-    func checkStreak() {
-        if let lastSession = lastSessionDate {
-            if lastSession.isToday || lastSession.isYesterday {
-                currentStreak = UserDefaults.standard
-                    .integer(forKey: "CurrentStreak")
-            } else {
-                currentStreak = 0
-                let defaults = UserDefaults.standard
-                defaults.set(currentStreak, forKey: "CurrentStreak")
-                images.shuffle()
-            }
         }
     }
     

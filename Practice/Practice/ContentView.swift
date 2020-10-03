@@ -12,9 +12,7 @@ struct ContentView: View {
     @EnvironmentObject var yogi: Yogi
     @EnvironmentObject var appTimer: AppTimer
 
-    var imageURL: URL {
-        return URL(string: "\(yogi.images[yogi.currentStreak].url)")!
-    }
+    var imageURL: URL { return URL(string: "\(yogi.images[yogi.currentStreak].url)")! }
     
     @State private var showStreak = true
     @State private var showTimerControls = true
@@ -70,20 +68,6 @@ struct ContentView: View {
             )
             
         } // End NavigationView
-        .onAppear(perform: {
-            setup()
-        })
-        .onDisappear(perform: {
-            setup()
-        })
-    }
-    
-    func setup() {
-        yogi.checkStreak()
-        let img = yogi.images[yogi.currentStreak]
-        if img.theme == "light" {
-            yogi.isDarkImage = false
-        }
     }
 }
 

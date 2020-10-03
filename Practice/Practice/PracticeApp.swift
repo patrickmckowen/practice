@@ -9,6 +9,8 @@ import SwiftUI
 
 @main
 struct PracticeApp: App {
+    @Environment(\.scenePhase) private var scenePhase
+    
     var appTimer = AppTimer()
     var yogi = Yogi()
     
@@ -17,6 +19,15 @@ struct PracticeApp: App {
             ContentView()
                 .environmentObject(appTimer)
                 .environmentObject(yogi)
+        }
+        .onChange(of: scenePhase) { phase in
+            if phase == .background {
+                print("App entered background")
+            }
+            if phase == .active {
+                yogi.updateStreak()
+                yogi.updateImage()
+            }
         }
     }
 }
