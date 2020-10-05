@@ -72,7 +72,7 @@ struct SessionComplete: View {
                     MilestoneBadge(isSmall: false, goal: yogi.nextMilestone, prevGoal: 0, currentStreak: yogi.currentStreak, longestStreak: yogi.longestStreak)
                         .frame(maxHeight: 144)
                         .padding(.bottom, 8)
-                    Text("Next badge in \(yogi.daysToNextMilestone) sessions")
+                    Text("Next streak badge in \(yogi.daysToNextMilestone) sessions")
                         .font(.subheadline)
                         .foregroundColor(.gray)
                         .padding(.bottom, 24)

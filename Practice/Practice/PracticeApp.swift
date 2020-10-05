@@ -26,7 +26,7 @@ struct PracticeApp: App {
             }
             if phase == .active {
                 yogi.updateStreak()
-                yogi.updateImage()
+           //     yogi.updateImage()
             }
         }
     }

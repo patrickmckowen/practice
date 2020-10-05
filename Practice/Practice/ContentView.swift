@@ -8,11 +8,12 @@
 import SwiftUI
 
 struct ContentView: View {
+    @Environment(\.scenePhase) private var scenePhase
     
     @EnvironmentObject var yogi: Yogi
     @EnvironmentObject var appTimer: AppTimer
-
-    var imageURL: URL { return URL(string: "\(yogi.images[yogi.currentStreak].url)")! }
+    
+//    var imageURL: URL { return URL(string: "\(yogi.images[yogi.currentStreak].url)")! }
     
     @State private var showStreak = true
     @State private var showTimerControls = true
@@ -28,6 +29,7 @@ struct ContentView: View {
                 Blur(style: yogi.isDarkImage ? .systemUltraThinMaterialLight : .systemUltraThinMaterialDark)
                     .edgesIgnoringSafeArea(.all)
                     .opacity(appTimer.state == .off ? 0.0 : 1.0)
+                    .animation(Animation.linear.delay(0.1))
                 
                 if showStreak {
                     Streak()
@@ -54,16 +56,7 @@ struct ContentView: View {
             .navigationBarBackButtonHidden(true)
             .navigationBarHidden(true)
             .background(
-                AsyncImage(url: imageURL, placeholder: {
-                    ZStack {
-                        Rectangle().fill(yogi.isDarkImage ? Color.black : Color.white)
-                            .frame(width: UIScreen.main.bounds.width)
-                        Text("Breath")
-                            .font(.system(size: 20, weight: .semibold, design: .serif))
-                            .foregroundColor(yogi.isDarkImage ? Color.white.opacity(0.4) : Color.black.opacity(0.4))
-                    }
-                })
-                .scaledToFill()
+                Rectangle().fill()
                 .edgesIgnoringSafeArea(.all)
             )
             

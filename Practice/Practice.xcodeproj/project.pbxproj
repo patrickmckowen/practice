@@ -7,10 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		871532302526A84C008D166E /* BGImages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8715322F2526A84C008D166E /* BGImages.swift */; };
 		871532332526A871008D166E /* images.json in Resources */ = {isa = PBXBuildFile; fileRef = 871532322526A871008D166E /* images.json */; };
 		871532352526A8BA008D166E /* Bundle+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871532342526A8BA008D166E /* Bundle+Extension.swift */; };
-		873758FB251A6C890008CFC3 /* Playground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 873758FA251A6C890008CFC3 /* Playground.swift */; };
 		875C8A442523EF7C0021466A /* AppleHealthPromo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 875C8A432523EF7C0021466A /* AppleHealthPromo.swift */; };
 		876C7B39251E9B3B0014E9E9 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 876C7B38251E9B3B0014E9E9 /* HealthKit.framework */; };
 		877B319B25151B1200698D88 /* PracticeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877B319A25151B1200698D88 /* PracticeApp.swift */; };
@@ -28,17 +26,15 @@
 		877B31C625151D1900698D88 /* TimerControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877B31C525151D1900698D88 /* TimerControls.swift */; };
 		877B31C925151D2700698D88 /* Yogi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877B31C825151D2700698D88 /* Yogi.swift */; };
 		879DBD1225225065005BBC5B /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 879DBD1125225065005BBC5B /* Settings.swift */; };
+		87BCD84525299979007F0E70 /* PhotoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87BCD84425299979007F0E70 /* PhotoManager.swift */; };
 		87C56578251BF1E500B35BB7 /* Milestones.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87C56577251BF1E500B35BB7 /* Milestones.swift */; };
 		87D65BB6251E6B5200BC1429 /* sound-forged-bowl.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 87D65BB5251E6B5200BC1429 /* sound-forged-bowl.mp3 */; };
 		87D65BB9251E6B6F00BC1429 /* AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87D65BB8251E6B6F00BC1429 /* AudioPlayer.swift */; };
-		87F051FC25263CA600BE5F74 /* AsyncImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F051FB25263CA600BE5F74 /* AsyncImage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		8715322F2526A84C008D166E /* BGImages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BGImages.swift; sourceTree = "<group>"; };
 		871532322526A871008D166E /* images.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = images.json; sourceTree = "<group>"; };
 		871532342526A8BA008D166E /* Bundle+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Extension.swift"; sourceTree = "<group>"; };
-		873758FA251A6C890008CFC3 /* Playground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Playground.swift; sourceTree = "<group>"; };
 		875C8A432523EF7C0021466A /* AppleHealthPromo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleHealthPromo.swift; sourceTree = "<group>"; };
 		876C7B36251E9B3B0014E9E9 /* Practice.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Practice.entitlements; sourceTree = "<group>"; };
 		876C7B38251E9B3B0014E9E9 /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
@@ -59,10 +55,10 @@
 		877B31C525151D1900698D88 /* TimerControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerControls.swift; sourceTree = "<group>"; };
 		877B31C825151D2700698D88 /* Yogi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Yogi.swift; sourceTree = "<group>"; };
 		879DBD1125225065005BBC5B /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		87BCD84425299979007F0E70 /* PhotoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoManager.swift; sourceTree = "<group>"; };
 		87C56577251BF1E500B35BB7 /* Milestones.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Milestones.swift; sourceTree = "<group>"; };
 		87D65BB5251E6B5200BC1429 /* sound-forged-bowl.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "sound-forged-bowl.mp3"; sourceTree = "<group>"; };
 		87D65BB8251E6B6F00BC1429 /* AudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayer.swift; sourceTree = "<group>"; };
-		87F051FB25263CA600BE5F74 /* AsyncImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncImage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,16 +105,15 @@
 				87D65BB4251E6B4100BC1429 /* Sounds */,
 				87AA8A4D251948A500A47B52 /* Fonts */,
 				877B319A25151B1200698D88 /* PracticeApp.swift */,
-				87F051FB25263CA600BE5F74 /* AsyncImage.swift */,
 				877B31AA25151BF000698D88 /* AppTimer.swift */,
 				875C8A432523EF7C0021466A /* AppleHealthPromo.swift */,
 				87D65BB8251E6B6F00BC1429 /* AudioPlayer.swift */,
 				871532342526A8BA008D166E /* Bundle+Extension.swift */,
 				871532322526A871008D166E /* images.json */,
-				8715322F2526A84C008D166E /* BGImages.swift */,
 				877B319C25151B1200698D88 /* ContentView.swift */,
 				877B31B025151C5700698D88 /* DateExtension.swift */,
 				87C56577251BF1E500B35BB7 /* Milestones.swift */,
+				87BCD84425299979007F0E70 /* PhotoManager.swift */,
 				877B31B325151C7700698D88 /* SessionComplete.swift */,
 				877B31B625151C9400698D88 /* SessionList.swift */,
 				877B31B925151CB900698D88 /* Stats.swift */,
@@ -128,7 +123,6 @@
 				877B31C225151D0800698D88 /* TimePicker.swift */,
 				877B31C525151D1900698D88 /* TimerControls.swift */,
 				877B31C825151D2700698D88 /* Yogi.swift */,
-				873758FA251A6C890008CFC3 /* Playground.swift */,
 				877B319E25151B1300698D88 /* Assets.xcassets */,
 				877B31A325151B1300698D88 /* Info.plist */,
 				877B31A025151B1300698D88 /* Preview Content */,
@@ -234,7 +228,7 @@
 				877B31C025151CFA00698D88 /* Styles.swift in Sources */,
 				877B31B125151C5700698D88 /* DateExtension.swift in Sources */,
 				877B319B25151B1200698D88 /* PracticeApp.swift in Sources */,
-				873758FB251A6C890008CFC3 /* Playground.swift in Sources */,
+				87BCD84525299979007F0E70 /* PhotoManager.swift in Sources */,
 				877B31C925151D2700698D88 /* Yogi.swift in Sources */,
 				877B31AB25151BF000698D88 /* AppTimer.swift in Sources */,
 				87C56578251BF1E500B35BB7 /* Milestones.swift in Sources */,
@@ -245,10 +239,8 @@
 				877B31BD25151CE500698D88 /* Streak.swift in Sources */,
 				877B31C325151D0800698D88 /* TimePicker.swift in Sources */,
 				87D65BB9251E6B6F00BC1429 /* AudioPlayer.swift in Sources */,
-				87F051FC25263CA600BE5F74 /* AsyncImage.swift in Sources */,
 				877B31B425151C7700698D88 /* SessionComplete.swift in Sources */,
 				877B31C625151D1900698D88 /* TimerControls.swift in Sources */,
-				871532302526A84C008D166E /* BGImages.swift in Sources */,
 				875C8A442523EF7C0021466A /* AppleHealthPromo.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

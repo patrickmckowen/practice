@@ -46,7 +46,6 @@ class Yogi: ObservableObject {
     }
     
     // Background Images
-    @Published var images: [BackgroundImage] = Bundle.main.decode("images.json")
     @Published var isDarkImage: Bool = true
     
     // HealthKit
@@ -71,7 +70,7 @@ class Yogi: ObservableObject {
                         currentStreak = 0
                         let defaults = UserDefaults.standard
                         defaults.set(currentStreak, forKey: "CurrentStreak")
-                        images.shuffle()
+             //           images.shuffle()
                     }
                 }
                 
@@ -91,18 +90,22 @@ class Yogi: ObservableObject {
                 currentStreak = 0
                 let defaults = UserDefaults.standard
                 defaults.set(currentStreak, forKey: "CurrentStreak")
-                images.shuffle()
+        //        images.shuffle()
             }
         }
     }
     
+    /*
     func updateImage() {
         let img = images[currentStreak]
         
         if img.theme == "light" {
             isDarkImage = false
         }
+        
+        imageURL = img.url
     }
+ */
     
     func activateHealthKit() {
         let typestoShare = Set([
