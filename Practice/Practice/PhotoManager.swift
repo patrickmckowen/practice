@@ -70,12 +70,7 @@ struct PreviewView: View {
     
     func updateImage() {
         let images = unsplash
-        let numbers = 1..<images.count
-        var newIndex: Int
-       
-        repeat {
-            newIndex = numbers.randomElement()!
-        } while newIndex == prevIndex
+        let newIndex = prevIndex + 1
         
         let img = images[newIndex]
         self.url = img.url
@@ -83,7 +78,11 @@ struct PreviewView: View {
             self.isDarkImage = false
         }
         
-        prevIndex = newIndex
+        if newIndex < images.count - 1 {
+            prevIndex = newIndex
+        } else {
+            prevIndex = -1
+        }
     }
 }
 
