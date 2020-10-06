@@ -28,6 +28,7 @@ class Yogi: ObservableObject {
         }
     }
     
+    @Published var lastSeenDate = Date(timeIntervalSince1970: UserDefaults.standard.double(forKey: "LastSeenDate"))
     @Published var firstSessionDate = UserDefaults.standard.object(forKey: "FirstSessionDate")
     
     // Meditation stats

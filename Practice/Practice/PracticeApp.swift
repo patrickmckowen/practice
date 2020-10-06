@@ -23,10 +23,16 @@ struct PracticeApp: App {
         .onChange(of: scenePhase) { phase in
             if phase == .background {
                 print("App entered background")
+                let defaults = UserDefaults.standard
+                defaults.set(Date().timeIntervalSince1970, forKey: "LastSeenDate")
+                print("Last seen date set: \(Date().timeIntervalSince1970)")
+                print("Yogi lastSeenDate updated to: \(yogi.lastSeenDate)")
+                
             }
             if phase == .active {
+                print("App became active")
                 yogi.updateStreak()
-           //     yogi.updateImage()
+                print("Streak updated")
             }
         }
     }

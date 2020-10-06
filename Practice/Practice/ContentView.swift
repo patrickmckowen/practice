@@ -9,18 +9,24 @@ import SwiftUI
 
 struct ContentView: View {
     @Environment(\.scenePhase) private var scenePhase
-    
     @EnvironmentObject var yogi: Yogi
     @EnvironmentObject var appTimer: AppTimer
     
 //    var imageURL: URL { return URL(string: "\(yogi.images[yogi.currentStreak].url)")! }
     
+    // Timer
     @State private var showStreak = true
     @State private var showTimerControls = true
     @State private var showTimePicker = false
     @State private var isSessionComplete = false
     
     @Namespace private var playAnimation
+    
+    // Photos
+    let unsplash: [UnsplashPhotos] = Bundle.main.decode("images.json")
+    @AppStorage("PrevIndex") var prevIndex = 0
+    @AppStorage("imageURL") var url = "https://images.unsplash.com/photo-1550025899-5f8a06b1b3a8"
+    @State var isDarkImage: Bool = true
     
     var body: some View {
         NavigationView {
@@ -56,11 +62,31 @@ struct ContentView: View {
             .navigationBarBackButtonHidden(true)
             .navigationBarHidden(true)
             .background(
-                Rectangle().fill()
-                .edgesIgnoringSafeArea(.all)
+                PhotoView(urlString: url)
+                    .scaledToFill()
+                    .edgesIgnoringSafeArea(.all)
+                    .onAppear(perform: {
+                        print("Photo view loaded")
+                    })
             )
-            
         } // End NavigationView
+    }
+    
+    func updateImage() {
+        let images = unsplash
+        let newIndex = prevIndex + 1
+        
+        let img = images[newIndex]
+        self.url = img.url
+        if img.theme == "light" {
+            self.isDarkImage = false
+        }
+        
+        if newIndex < images.count - 1 {
+            prevIndex = newIndex
+        } else {
+            prevIndex = -1
+        }
     }
 }
 

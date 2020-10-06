@@ -26,7 +26,7 @@
 		877B31C625151D1900698D88 /* TimerControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877B31C525151D1900698D88 /* TimerControls.swift */; };
 		877B31C925151D2700698D88 /* Yogi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877B31C825151D2700698D88 /* Yogi.swift */; };
 		879DBD1225225065005BBC5B /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 879DBD1125225065005BBC5B /* Settings.swift */; };
-		87BCD84525299979007F0E70 /* PhotoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87BCD84425299979007F0E70 /* PhotoManager.swift */; };
+		87BCD84525299979007F0E70 /* Photos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87BCD84425299979007F0E70 /* Photos.swift */; };
 		87C56578251BF1E500B35BB7 /* Milestones.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87C56577251BF1E500B35BB7 /* Milestones.swift */; };
 		87D65BB6251E6B5200BC1429 /* sound-forged-bowl.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 87D65BB5251E6B5200BC1429 /* sound-forged-bowl.mp3 */; };
 		87D65BB9251E6B6F00BC1429 /* AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87D65BB8251E6B6F00BC1429 /* AudioPlayer.swift */; };
@@ -55,7 +55,7 @@
 		877B31C525151D1900698D88 /* TimerControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerControls.swift; sourceTree = "<group>"; };
 		877B31C825151D2700698D88 /* Yogi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Yogi.swift; sourceTree = "<group>"; };
 		879DBD1125225065005BBC5B /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
-		87BCD84425299979007F0E70 /* PhotoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoManager.swift; sourceTree = "<group>"; };
+		87BCD84425299979007F0E70 /* Photos.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photos.swift; sourceTree = "<group>"; };
 		87C56577251BF1E500B35BB7 /* Milestones.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Milestones.swift; sourceTree = "<group>"; };
 		87D65BB5251E6B5200BC1429 /* sound-forged-bowl.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "sound-forged-bowl.mp3"; sourceTree = "<group>"; };
 		87D65BB8251E6B6F00BC1429 /* AudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayer.swift; sourceTree = "<group>"; };
@@ -113,7 +113,7 @@
 				877B319C25151B1200698D88 /* ContentView.swift */,
 				877B31B025151C5700698D88 /* DateExtension.swift */,
 				87C56577251BF1E500B35BB7 /* Milestones.swift */,
-				87BCD84425299979007F0E70 /* PhotoManager.swift */,
+				87BCD84425299979007F0E70 /* Photos.swift */,
 				877B31B325151C7700698D88 /* SessionComplete.swift */,
 				877B31B625151C9400698D88 /* SessionList.swift */,
 				877B31B925151CB900698D88 /* Stats.swift */,
@@ -228,7 +228,7 @@
 				877B31C025151CFA00698D88 /* Styles.swift in Sources */,
 				877B31B125151C5700698D88 /* DateExtension.swift in Sources */,
 				877B319B25151B1200698D88 /* PracticeApp.swift in Sources */,
-				87BCD84525299979007F0E70 /* PhotoManager.swift in Sources */,
+				87BCD84525299979007F0E70 /* Photos.swift in Sources */,
 				877B31C925151D2700698D88 /* Yogi.swift in Sources */,
 				877B31AB25151BF000698D88 /* AppTimer.swift in Sources */,
 				87C56578251BF1E500B35BB7 /* Milestones.swift in Sources */,
@@ -383,7 +383,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.patmckowen.Practice;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -406,7 +406,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.patmckowen.Practice;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
