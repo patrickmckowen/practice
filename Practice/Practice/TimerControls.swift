@@ -165,7 +165,7 @@ struct TimerControls: View {
                     if appTimer.state == .paused {
                         VStack(spacing: 8) {
                             Spacer()
-                            if appTimer.timePassed >= 1 {
+                            if appTimer.timePassed >= 300 {
                                 Button("Log \(appTimer.formatTime(appTimer.timePassed)) sesion") {
                                     withAnimation(.spring()) {
                                         yogi.saveSession(date: Date(), duration: appTimer.timePassed)

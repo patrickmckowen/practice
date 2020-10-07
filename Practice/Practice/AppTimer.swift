@@ -44,7 +44,7 @@ class AppTimer: ObservableObject {
         guard state != .running else { return }
         
         if state != .paused {
-            playSound(sound: "sound-forged-bowl", type: "mp3")
+            playSound(sound: "sound-forged-bowl-1db", type: "mp3")
         }
         
         timer = Timer.scheduledTimer(
@@ -74,7 +74,7 @@ class AppTimer: ObservableObject {
     
     func pause() {
         guard state == .running else { return }
-        stopSound(sound: "sound-forged-bowl", type: "mp3")
+        stopSound(sound: "sound-forged-bowl-1db", type: "mp3")
         timer.invalidate()
         state = .paused
     }
