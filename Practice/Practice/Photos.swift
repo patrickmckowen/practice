@@ -6,90 +6,93 @@
 //
 
 import SwiftUI
+import Combine
 
-struct UnsplashPhotos: Codable {
-    let name: String
+struct BackgroundPhotos: Codable {
     let url: String
     let theme: String
 }
 
-struct PhotoView: View {
-    @StateObject var loader: ImageLoader
-    static var defaultImage = UIImage(named: "image-placeholder")
-    
-    init(urlString: String) {
-        _loader = StateObject(wrappedValue: ImageLoader(urlString: urlString))
-    }
+struct Photo: View {
+    @EnvironmentObject var manager: PhotoManager
+    @State private var image = UIImage(named: "default")
     
     var body: some View {
-        Image(uiImage: loader.image ?? PhotoView.defaultImage!)
+        Image(uiImage: image!)
             .resizable()
+            .scaledToFill()
+            .onReceive(manager.didChange) { _ in
+                reload()
+            }
+    }
+    
+    func reload() {
+        self.image = manager.image
     }
 }
 
-class ImageLoader: ObservableObject {
-    @Published var image: UIImage?
-    var urlString: String?
-    var imageCache = ImageCache.getImageCache()
+class PhotoManager: ObservableObject {
+    let photos: [BackgroundPhotos] = Bundle.main.decode("photos.json")
+    var didChange = PassthroughSubject<(UIImage), Never>()
+    var imageUrl: String?
+    var image: UIImage?
     
-    init(urlString: String) {
-        print("Starting image loader")
-        self.urlString = urlString
-        
-        if loadImageFromCache() {
-            return
-        }
-        loadImageFromURL()
+    @Published var loading = true
+    @Published var showUI = false
+    @Published var isDarkImage = true
+    @Published var prevPhotoIndex: Int = UserDefaults.standard.integer(forKey: "PrevPhotoIndex")
+    
+    func loadNewPhoto() {
+        nextPhoto()
+        loadPhotoFromUrl()
     }
     
-    func loadImageFromCache() -> Bool {
-        guard let urlString = urlString else {
-            return false
-        }
-
-        guard let cacheImage = imageCache.get(forKey: urlString) else {
-            return false
+    func nextPhoto() {
+        let nextIndex = prevPhotoIndex + 1
+        let photo = photos[nextIndex]
+        self.imageUrl = photo.url
+        
+        if photo.theme == "dark" {
+            self.isDarkImage = true
+        } else {
+            self.isDarkImage = false
         }
         
-        image = cacheImage
-        print("Image loaded from cache")
-        return true
+        if nextIndex < photos.count - 1 {
+            self.prevPhotoIndex = nextIndex
+            UserDefaults.standard.set(nextIndex, forKey: "PrevPhotoIndex")
+        } else {
+            self.prevPhotoIndex = -1
+            UserDefaults.standard.set(-1, forKey: "PrevPhotoIndex")
+        }
     }
     
-    func loadImageFromURL() {
-        guard let urlString = urlString else { return }
-        
-        guard let url = URL(string: urlString) else { return }
+    func loadPhotoFromUrl() {
+        guard let url = URL(string: self.imageUrl!) else { return }
         let task = URLSession.shared.dataTask(with: url) { data, response, error in
             guard let data = data else { return }
             DispatchQueue.main.async {
                 guard let loadedImage = UIImage(data: data) else {
                     return
                 }
-                self.imageCache.set(forKey: self.urlString!, image: loadedImage)
                 self.image = loadedImage
-                print("Image loaded from url")
+                self.didChange.send(self.image!)
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                    withAnimation(.linear) {
+                        self.loading = false
+                    }
+                    
+                }
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                    withAnimation(.linear(duration: 1)) {
+                        self.showUI = true
+                    }
+                    
+                }
             }
         }
         task.resume()
-    }
-}
-
-class ImageCache {
-    var cache = NSCache<NSString, UIImage>()
-    
-    func get(forKey: String) -> UIImage? {
-        return cache.object(forKey: NSString(string: forKey))
-    }
-    
-    func set(forKey: String, image: UIImage) {
-        cache.setObject(image, forKey: NSString(string: forKey))
-    }
-}
-
-extension ImageCache {
-    private static var imageCache = ImageCache()
-    static func getImageCache() -> ImageCache {
-        return imageCache
     }
 }

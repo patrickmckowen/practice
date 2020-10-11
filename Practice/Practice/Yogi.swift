@@ -78,7 +78,7 @@ class Yogi: ObservableObject {
             } else {
                 print("Error decoding Sessions")}
         } else {
-            print("Saved Sessions is empty")
+          //  print("Saved Sessions is empty")
         }
     }
     

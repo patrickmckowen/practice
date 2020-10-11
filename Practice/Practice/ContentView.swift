@@ -11,8 +11,7 @@ struct ContentView: View {
     @Environment(\.scenePhase) private var scenePhase
     @EnvironmentObject var yogi: Yogi
     @EnvironmentObject var appTimer: AppTimer
-    
-//    var imageURL: URL { return URL(string: "\(yogi.images[yogi.currentStreak].url)")! }
+    @EnvironmentObject var photoManager: PhotoManager
     
     // Timer
     @State private var showStreak = true
@@ -22,27 +21,21 @@ struct ContentView: View {
     
     @Namespace private var playAnimation
     
-    // Photos
-    let unsplash: [UnsplashPhotos] = Bundle.main.decode("images.json")
-    @AppStorage("PrevIndex") var prevIndex = 0
-    @AppStorage("imageURL") var url = "https://images.unsplash.com/photo-1550025899-5f8a06b1b3a8"
-    @State var isDarkImage: Bool = true
-    
     var body: some View {
         NavigationView {
             ZStack {
                 
-                Blur(style: yogi.isDarkImage ? .systemUltraThinMaterialLight : .systemUltraThinMaterialDark)
+                Blur(style: photoManager.isDarkImage ? .systemUltraThinMaterialLight : .systemUltraThinMaterialDark)
                     .edgesIgnoringSafeArea(.all)
                     .opacity(appTimer.state == .off ? 0.0 : 1.0)
                     .animation(Animation.linear.delay(0.1))
                 
-                if showStreak {
+                if showStreak && photoManager.showUI {
                     Streak()
                         .transition(AnyTransition.opacity.combined(with: .move(edge: .top)))
                 }
                 
-                if appTimer.state != .completed && showTimerControls {
+                if appTimer.state != .completed && showTimerControls && photoManager.showUI {
                     TimerControls(showTimePicker: $showTimePicker)
                         .transition(AnyTransition.opacity.combined(with: .move(edge: .bottom)))
                 }
@@ -58,45 +51,41 @@ struct ContentView: View {
                         })
                         .transition(.scale)
                 }
+                
+                if photoManager.loading {
+                    ZStack {
+                        Color.black
+                        Text("Take a deep breath")
+                            .foregroundColor(Color.white.opacity(0.5))
+                            .font(.system(size: 20, weight: .semibold, design: .serif))
+                    }
+                    .opacity(photoManager.loading ? 1.0 : 0.0)
+                    .edgesIgnoringSafeArea(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
+                }
             }
             .navigationBarBackButtonHidden(true)
             .navigationBarHidden(true)
             .background(
-                PhotoView(urlString: url)
-                    .scaledToFill()
-                    .edgesIgnoringSafeArea(.all)
-                    .onAppear(perform: {
-                        print("Photo view loaded")
-                    })
+                ZStack {
+                    Photo()
+                        .edgesIgnoringSafeArea(.all)
+                }
             )
         } // End NavigationView
     }
-    
-    func updateImage() {
-        let images = unsplash
-        let newIndex = prevIndex + 1
-        
-        let img = images[newIndex]
-        self.url = img.url
-        if img.theme == "light" {
-            self.isDarkImage = false
-        }
-        
-        if newIndex < images.count - 1 {
-            prevIndex = newIndex
-        } else {
-            prevIndex = -1
-        }
-    }
 }
+
+
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         let appTimer = AppTimer()
         let yogi = Yogi()
+        let photoManager = PhotoManager()
         return ContentView()
             .environmentObject(appTimer)
             .environmentObject(yogi)
+            .environmentObject(photoManager)
     }
 }
 

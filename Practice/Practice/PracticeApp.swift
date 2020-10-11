@@ -13,26 +13,35 @@ struct PracticeApp: App {
     
     var appTimer = AppTimer()
     var yogi = Yogi()
+    var photoManager = PhotoManager()
     
     var body: some Scene {
         WindowGroup {
             ContentView()
                 .environmentObject(appTimer)
                 .environmentObject(yogi)
+                .environmentObject(photoManager)
         }
         .onChange(of: scenePhase) { phase in
             if phase == .background {
-                print("App entered background")
+                photoManager.loading = true
+                photoManager.showUI = false
+                appTimer.state == .off
+                yogi.lastSeenDate = Date()
                 let defaults = UserDefaults.standard
                 defaults.set(Date().timeIntervalSince1970, forKey: "LastSeenDate")
-                print("Last seen date set: \(Date().timeIntervalSince1970)")
-                print("Yogi lastSeenDate updated to: \(yogi.lastSeenDate)")
                 
             }
             if phase == .active {
-                print("App became active")
-                yogi.updateStreak()
-                print("Streak updated")
+                photoManager.loadNewPhoto()
+                /*
+                if !yogi.lastSeenDate.isToday {
+                    photoManager.loadNewPhoto()
+                } else {
+                    photoManager.loading = false
+                }
+ */
+
             }
         }
     }

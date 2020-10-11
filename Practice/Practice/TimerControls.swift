@@ -40,7 +40,7 @@ struct TimerControls: View {
                 Spacer()
                 LinearGradient(gradient: Gradient(colors: [Color.black, Color.black.opacity(0.0)]), startPoint: .bottom, endPoint: .top)
                     .edgesIgnoringSafeArea(.bottom)
-                    .frame(height: 212)
+                    .frame(height: 180)
             }
             .opacity(appTimer.state == .off ? 1.0 : 0.0)
             
@@ -82,7 +82,6 @@ struct TimerControls: View {
                         .onTapGesture(perform: {
                             if appTimer.state == .off {
                                 withAnimation(.spring()) {
-                                    hapticSuccess()
                                     appTimer.start()
                                 }
                             }
@@ -193,11 +192,6 @@ struct TimerControls: View {
                 
             } // End outer conditional
         }
-    }
-    
-    func hapticSuccess() {
-        let generator = UINotificationFeedbackGenerator()
-        generator.notificationOccurred(.success)
     }
 }
 
