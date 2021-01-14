@@ -48,27 +48,27 @@ class PhotoManager: ObservableObject {
     }
     
     func nextPhoto() {
-        let nextIndex = prevPhotoIndex + 1
+        var nextIndex: Int
+        if prevPhotoIndex < photos.count - 1 {
+            nextIndex = prevPhotoIndex + 1
+        } else {
+            nextIndex = 0
+        }
         let photo = photos[nextIndex]
-        self.imageUrl = photo.url
+        imageUrl = photo.url
         
         if photo.theme == "dark" {
-            self.isDarkImage = true
+            isDarkImage = true
         } else {
-            self.isDarkImage = false
+            isDarkImage = false
         }
         
-        if nextIndex < photos.count - 1 {
-            self.prevPhotoIndex = nextIndex
-            UserDefaults.standard.set(nextIndex, forKey: "PrevPhotoIndex")
-        } else {
-            self.prevPhotoIndex = -1
-            UserDefaults.standard.set(-1, forKey: "PrevPhotoIndex")
-        }
+        prevPhotoIndex = nextIndex
+        UserDefaults.standard.set(prevPhotoIndex, forKey: "PrevPhotoIndex")
     }
     
     func loadPhotoFromUrl() {
-        guard let url = URL(string: self.imageUrl!) else { return }
+        guard let url = URL(string: imageUrl!) else { return }
         let task = URLSession.shared.dataTask(with: url) { data, response, error in
             guard let data = data else { return }
             DispatchQueue.main.async {

@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		871532332526A871008D166E /* photos.json in Resources */ = {isa = PBXBuildFile; fileRef = 871532322526A871008D166E /* photos.json */; };
 		871532352526A8BA008D166E /* Bundle+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871532342526A8BA008D166E /* Bundle+Extension.swift */; };
-		875463EE2533AA16006F17F2 /* sound-forged-bowl-1db.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 875463ED2533AA16006F17F2 /* sound-forged-bowl-1db.mp3 */; };
 		875463F12533AFCF006F17F2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 875463F02533AFCF006F17F2 /* AppDelegate.swift */; };
 		875C8A442523EF7C0021466A /* AppleHealthPromo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 875C8A432523EF7C0021466A /* AppleHealthPromo.swift */; };
 		876C7B39251E9B3B0014E9E9 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 876C7B38251E9B3B0014E9E9 /* HealthKit.framework */; };
@@ -34,10 +33,22 @@
 		87D65BB9251E6B6F00BC1429 /* AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87D65BB8251E6B6F00BC1429 /* AudioPlayer.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		87CCD6B3252E806300655CE5 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		871532322526A871008D166E /* photos.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = photos.json; sourceTree = "<group>"; };
 		871532342526A8BA008D166E /* Bundle+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Extension.swift"; sourceTree = "<group>"; };
-		875463ED2533AA16006F17F2 /* sound-forged-bowl-1db.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "sound-forged-bowl-1db.mp3"; path = "../../../../../Desktop/sound-forged-bowl-1db.mp3"; sourceTree = "<group>"; };
 		875463F02533AFCF006F17F2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		875C8A432523EF7C0021466A /* AppleHealthPromo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleHealthPromo.swift; sourceTree = "<group>"; };
 		876C7B36251E9B3B0014E9E9 /* Practice.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Practice.entitlements; sourceTree = "<group>"; };
@@ -61,6 +72,8 @@
 		879DBD1125225065005BBC5B /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		87BCD84425299979007F0E70 /* Photos.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photos.swift; sourceTree = "<group>"; };
 		87C56577251BF1E500B35BB7 /* Milestones.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Milestones.swift; sourceTree = "<group>"; };
+		87CCD6A3252E806200655CE5 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		87CCD6A5252E806200655CE5 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		87D65BB5251E6B5200BC1429 /* sound-forged-bowl.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "sound-forged-bowl.mp3"; sourceTree = "<group>"; };
 		87D65BB8251E6B6F00BC1429 /* AudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -81,6 +94,8 @@
 			isa = PBXGroup;
 			children = (
 				876C7B38251E9B3B0014E9E9 /* HealthKit.framework */,
+				87CCD6A3252E806200655CE5 /* WidgetKit.framework */,
+				87CCD6A5252E806200655CE5 /* SwiftUI.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -107,10 +122,9 @@
 			children = (
 				876C7B36251E9B3B0014E9E9 /* Practice.entitlements */,
 				87D65BB4251E6B4100BC1429 /* Sounds */,
-				87AA8A4D251948A500A47B52 /* Fonts */,
 				877B319A25151B1200698D88 /* PracticeApp.swift */,
-				875463F02533AFCF006F17F2 /* AppDelegate.swift */,
 				877B31AA25151BF000698D88 /* AppTimer.swift */,
+				875463F02533AFCF006F17F2 /* AppDelegate.swift */,
 				875C8A432523EF7C0021466A /* AppleHealthPromo.swift */,
 				87D65BB8251E6B6F00BC1429 /* AudioPlayer.swift */,
 				871532342526A8BA008D166E /* Bundle+Extension.swift */,
@@ -128,8 +142,8 @@
 				877B31C225151D0800698D88 /* TimePicker.swift */,
 				877B31C525151D1900698D88 /* TimerControls.swift */,
 				877B31C825151D2700698D88 /* Yogi.swift */,
-				877B319E25151B1300698D88 /* Assets.xcassets */,
 				877B31A325151B1300698D88 /* Info.plist */,
+				877B319E25151B1300698D88 /* Assets.xcassets */,
 				877B31A025151B1300698D88 /* Preview Content */,
 			);
 			path = Practice;
@@ -143,17 +157,9 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		87AA8A4D251948A500A47B52 /* Fonts */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Fonts;
-			sourceTree = "<group>";
-		};
 		87D65BB4251E6B4100BC1429 /* Sounds */ = {
 			isa = PBXGroup;
 			children = (
-				875463ED2533AA16006F17F2 /* sound-forged-bowl-1db.mp3 */,
 				87D65BB5251E6B5200BC1429 /* sound-forged-bowl.mp3 */,
 			);
 			path = Sounds;
@@ -169,6 +175,7 @@
 				877B319325151B1200698D88 /* Sources */,
 				877B319425151B1200698D88 /* Frameworks */,
 				877B319525151B1200698D88 /* Resources */,
+				87CCD6B3252E806300655CE5 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
@@ -185,7 +192,7 @@
 		877B318F25151B1200698D88 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1200;
+				LastSwiftUpdateCheck = 1220;
 				LastUpgradeCheck = 1200;
 				TargetAttributes = {
 					877B319625151B1200698D88 = {
@@ -219,7 +226,6 @@
 				87D65BB6251E6B5200BC1429 /* sound-forged-bowl.mp3 in Resources */,
 				871532332526A871008D166E /* photos.json in Resources */,
 				877B31A225151B1300698D88 /* Preview Assets.xcassets in Resources */,
-				875463EE2533AA16006F17F2 /* sound-forged-bowl-1db.mp3 in Resources */,
 				877B319F25151B1300698D88 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -375,6 +381,7 @@
 		877B31A725151B1300698D88 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Practice/Practice.entitlements;
@@ -388,7 +395,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.patmckowen.Practice;
+				PRODUCT_BUNDLE_IDENTIFIER = com.patmckowen.Sunrise;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -398,6 +405,7 @@
 		877B31A825151B1300698D88 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Practice/Practice.entitlements;
@@ -411,7 +419,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.patmckowen.Practice;
+				PRODUCT_BUNDLE_IDENTIFIER = com.patmckowen.Sunrise;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;

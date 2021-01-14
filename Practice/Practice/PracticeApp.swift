@@ -10,6 +10,7 @@ import SwiftUI
 @main
 struct PracticeApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+    
     @Environment(\.scenePhase) private var scenePhase
     
     var appTimer = AppTimer()
@@ -27,19 +28,21 @@ struct PracticeApp: App {
             if phase == .background {
                 photoManager.loading = true
                 photoManager.showUI = false
-                appTimer.reset()
                 yogi.lastSeenDate = Date()
                 let defaults = UserDefaults.standard
                 defaults.set(Date().timeIntervalSince1970, forKey: "LastSeenDate")
                 
             }
             if phase == .active {
+                photoManager.loadNewPhoto()
+                /*
                 if !yogi.lastSeenDate.isToday {
                     photoManager.loadNewPhoto()
                 } else {
                     photoManager.loading = false
                     photoManager.showUI = true
                 }
+ */
 
             }
         }
